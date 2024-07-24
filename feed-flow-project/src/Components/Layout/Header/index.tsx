@@ -15,7 +15,10 @@ export function Header() {
 
     return (
         <Flex
+            zIndex={1}
             justify={"space-around"}
+            position={"fixed"}
+            top={0}
             align={"center"}
             bg={"white"}
             w={"100%"}

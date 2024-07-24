@@ -1,3 +1,4 @@
+import NewsContext from "@/Components/Context";
 import { MainLayout } from "@/Components/Layout";
 import { Header } from "@/Components/Layout/Header";
 import { customTheme } from "@/styles/global/theme";
@@ -9,8 +10,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={customTheme}>
       <MainLayout>
-      <Header />
-      <Component {...pageProps} />
+        <NewsContext>
+          <Component {...pageProps} />
+        </NewsContext>
       </MainLayout>
     </ChakraProvider>
   );

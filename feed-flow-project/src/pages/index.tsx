@@ -9,18 +9,18 @@ export default function Home() {
   return (
     <>
       <MainLayout>
-        <Flex mt={"2rem"} gap={6} justify={"center"}>
-            <Box>
-              <LeftSidebar />
-            </Box>
+        <Flex w={"100%"} justify={"center"} direction={"row"} gap={4} justifyContent={"center"}>
+          <Box mt={"6rem"} position={"absolute"} display={"flex"} left={"10rem"}>
+            <LeftSidebar />
+          </Box>
 
-            <Box w={"35%"} maxW={"35%"}>
-              <CenterFeed />
-            </Box>
+          <Box mt={"6rem"} w={"35%"} maxW={"35%"}>
+            <CenterFeed />
+          </Box>
 
-            <Box>
-              <RightSidebar />
-            </Box>
+          <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"10rem"}>
+            <RightSidebar />
+          </Box>
         </Flex>
       </MainLayout>
     </>
