@@ -12,6 +12,19 @@ export function Header() {
 
     const { isOpen, onOpen } = useDisclosure();
     const router = useRouter();
+    // variaveis para condição de rota
+
+    //HOME
+    const routeHome = '/';
+    const isRouteHome = router.pathname === routeHome;
+
+    //IMAGES
+    const routeImage = '/images';
+    const isRouteImage = router.pathname === routeImage;
+
+    //VIDEOS
+    const routeVideos = '/videos';
+    const isRouteVideos = router.pathname === routeVideos;
 
     return (
         <Flex
@@ -39,12 +52,24 @@ export function Header() {
                                     justifyContent={"center"}
                                     alignItems={"center"}
                                     flexDir={"column"}
-                                    color={"black.700"}
+                                    color={
+                                        isRouteHome && item.link === routeHome || 
+                                        isRouteImage && item.link === routeImage || 
+                                        isRouteVideos && item.link === routeVideos ? 'violet.600' : ''
+                                    }
                                     _hover={{
-                                        color: 'black'
+                                        color: 'violet.700'
                                     }}
-                                    borderBottom={item.link === '/' ? '2px solid' : ''}
-                                        borderBottomColor={item.link === '/' ? 'black.950' : ''}
+                                    borderBottom={
+                                        isRouteHome && item.link === routeHome || 
+                                        isRouteImage && item.link === routeImage || 
+                                        isRouteVideos && item.link === routeVideos ? '2px solid' : ''
+                                    }
+                                    borderBottomColor={
+                                        isRouteHome && item.link === routeHome || 
+                                        isRouteImage && item.link === routeImage || 
+                                        isRouteVideos && item.link === routeVideos ? 'violet.500' : ''
+                                    }
                                 >
                                     <Icon boxSize={"1.5rem"} as={item.icon} />
                                     <Text

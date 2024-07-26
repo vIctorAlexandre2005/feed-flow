@@ -1,44 +1,77 @@
+import { Flex } from "@chakra-ui/react";
 import axios from "axios";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
-import { getNewsBr } from "../services/NewsAPI/newsBr";
+import { PulseLoader } from "react-spinners";
 
-interface NoticiesBR {
+export interface Noticies {
 
 }
 
 export interface VariablesContextType {
-    newsDataBr: Array<NoticiesBR>;
-    setNewsDataBr: Dispatch<SetStateAction<Array<NoticiesBR>>>;
+    combinedData: Array<Noticies>;
+    setCombinedData: Dispatch<SetStateAction<Array<Noticies>>>;
 }
 
 const defaultValue: VariablesContextType = {
-    newsDataBr: [],
-    setNewsDataBr: () => { },
+    combinedData: [],
+    setCombinedData: () => { },
 };
 
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
 const NewsContext = ({ children }: { children: ReactNode }) => {
-    const [newsDataBr, setNewsDataBr] = useState<Array<NoticiesBR>>([]);
+    const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
 
-    async function getDataNewsBr() {
+    async function noticiesData() {
         try {
-            const newsBrResponse = await getNewsBr();
-            setNewsDataBr(newsBrResponse);
+            const [
+                usersResponse, 
+                usersResponse200, 
+                usersResponse300,
+                newsResponseBr, 
+                newsResponseApple, 
+                newsResponseUs
+            ] = await Promise.all([
+                axios.get("https://randomuser.me/api/?results=100"),
+                axios.get("https://randomuser.me/api/?results=200"),
+                axios.get("https://randomuser.me/api/?results=300"),
+                axios.get("https://newsapi.org/v2/everything?q=bitcoin&apiKey=343a4fdb5cf14397a3f251cba8370a51"),
+                axios.get("https://newsapi.org/v2/everything?q=apple&from=2024-07-23&to=2024-07-23&sortBy=popularity&apiKey=343a4fdb5cf14397a3f251cba8370a51"),
+                axios.get("https://newsapi.org/v2/everything?q=tesla&from=2024-06-25&sortBy=publishedAt&apiKey=343a4fdb5cf14397a3f251cba8370a51"),
+            ]);
+
+            const usersData = usersResponse.data?.results;
+            const userData200 = usersResponse200.data?.results;
+            const userData300 = usersResponse300.data?.results;
+            const newsDataBr = newsResponseBr.data?.articles;
+            const newsApple = newsResponseApple.data.articles;
+            const newsDataUs = newsResponseUs.data?.articles;
+
+            // Combine the data as needed
+            const combined = usersData.map((user: any, index: number) => ({
+                user,
+                user200: userData200[index % userData200?.length], 
+                user300: userData300[index % userData300?.length],
+                newsBr: newsDataBr[index % newsDataBr?.length], // Just an example of combininga
+                newsAp: newsApple[index % newsApple?.length],
+                newsUs: newsDataUs[index % newsDataUs?.length]
+            }));
+
+            setCombinedData(combined);
         } catch (error) {
-            console.error("Erro ao pegar API de notícias BR:", error);
+            console.log("Erro ao pegar combinação de dados:", error);
         }
     }
 
     useEffect(() => {
-        getDataNewsBr();
-    }, [])
+        noticiesData();
+    }, []);
 
     return (
         <ParamsProvider.Provider
             value={{
-                newsDataBr,
-                setNewsDataBr
+                combinedData,
+                setCombinedData
             }}
         >
             {children}
