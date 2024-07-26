@@ -32,7 +32,7 @@ export function FeedImages({ item, photoID }: FeedImg) {
 
         if (savedLikes) {
             toast.success('Publicação curtida!', {
-                autoClose: 2000,
+                autoClose: 1000,
             });
         }
     };
@@ -44,7 +44,7 @@ export function FeedImages({ item, photoID }: FeedImg) {
         
         if (savedFavorites) {
             toast.success('Publicação favoritada!', {
-                autoClose: 2000,
+                autoClose: 1000,
             });
         }
     };
@@ -61,12 +61,15 @@ export function FeedImages({ item, photoID }: FeedImg) {
                     borderRadius={"lg"}
                 >
                     <CardHeader>
-                        <Flex align={"center"} gap={2}>
-                            <Box mb={"1rem"} mt={"1rem"}>
-                                <Text fontWeight={"bold"}>
-                                    @{item?.photographer} publicou algo
+                        <Flex direction={"column"} gap={2}>
+                            <Box mb={"1rem"} display={"flex"} gap={1}>
+                                <Text color={"violet.500"} fontWeight={"bold"}>
+                                    @{item?.photographer}
                                 </Text>
+                                <Text>publicou uma foto</Text>
                             </Box>
+
+                            <Text fontSize={"0.90rem"}>{item?.alt}</Text>
                         </Flex>
                     </CardHeader>
 

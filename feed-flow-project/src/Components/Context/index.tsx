@@ -1,27 +1,41 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import axios from "axios";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
-import { PulseLoader } from "react-spinners";
+import { ClipLoader, PulseLoader } from "react-spinners";
+import { auth, provider } from "../services/firebase";
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useRouter } from "next/router";
+import { User } from "firebase/auth";
 
 export interface Noticies {
 
 }
 
+
 export interface VariablesContextType {
     combinedData: Array<Noticies>;
     setCombinedData: Dispatch<SetStateAction<Array<Noticies>>>;
+    user: User | null | undefined;
+    handleSignIn: () => void;
 }
 
 const defaultValue: VariablesContextType = {
     combinedData: [],
     setCombinedData: () => { },
+    user: null,
+    handleSignIn: () => {},
 };
 
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
 const NewsContext = ({ children }: { children: ReactNode }) => {
     const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
+    const [user] = useAuthState(auth as any);
 
+    function handleSignIn() {
+        auth.signInWithPopup(provider).catch(alert);
+    };
+    
     async function noticiesData() {
         try {
             const [
@@ -71,7 +85,9 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
         <ParamsProvider.Provider
             value={{
                 combinedData,
-                setCombinedData
+                setCombinedData,
+                user,
+                handleSignIn
             }}
         >
             {children}

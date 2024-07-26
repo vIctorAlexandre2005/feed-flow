@@ -7,7 +7,7 @@ import { RenderNewsTwo } from "./newsTwo";
 import { RenderNewsThree } from "./newsThree";
 import { VariablesContextType, useContextFeedContext } from "@/Components/Context";
 
-export function CenterFeed({ combinedData, setCombinedData } : VariablesContextType) {
+export function CenterFeed({ combinedData, setCombinedData, user } : VariablesContextType) {
 
     if (combinedData?.length === 0) {
         return (
@@ -21,9 +21,9 @@ export function CenterFeed({ combinedData, setCombinedData } : VariablesContextT
         <>
             {combinedData?.map((item, idx) => (
                 <Fragment key={idx}>
-                    <RenderNewsOne item={item} idx={idx} />
-                    <RenderNewsTwo item={item} idx={idx} />
-                    <RenderNewsThree item={item} idx={idx} />
+                    <RenderNewsOne user={user} item={item} idx={idx} />
+                    <RenderNewsTwo item={item} user={user} idx={idx} />
+                    <RenderNewsThree item={item} user={user} idx={idx} />
                 </Fragment>
             ))}
         </>

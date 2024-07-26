@@ -4,12 +4,10 @@ import { CenterFeed } from "@/Components/Layout/Home/CenterFeed";
 import { LeftSidebar } from "@/Components/Layout/Home/LeftSidebar";
 import { RightSidebar } from "@/Components/Layout/Home/RightSidebar";
 import { Box, Flex } from "@chakra-ui/react";
-import { FaCircleXmark } from "react-icons/fa6";
-import { PulseLoader } from "react-spinners";
 
 export default function Home() {
 
-  const { combinedData, setCombinedData } = useContextFeedContext();
+  const { combinedData, setCombinedData, user, handleSignIn } = useContextFeedContext();
 
   return (
     <>
@@ -20,7 +18,12 @@ export default function Home() {
           </Box>
 
           <Box mt={"6rem"} w={"35%"} maxW={"35%"}>
-            <CenterFeed combinedData={combinedData} setCombinedData={setCombinedData} />
+            <CenterFeed 
+            handleSignIn={handleSignIn}
+              user={user} 
+              combinedData={combinedData} 
+              setCombinedData={setCombinedData} 
+            />
           </Box>
 
           <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"10rem"}>

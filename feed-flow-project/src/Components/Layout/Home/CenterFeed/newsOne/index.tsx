@@ -1,17 +1,22 @@
-import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Flex, Icon, Img, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Flex, Icon, Img, Text, useDisclosure } from "@chakra-ui/react";
+import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { BiHeart, BiSolidLike } from "react-icons/bi";
 import { BsChat } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { GrLanguage, GrLike, GrLikeFill } from "react-icons/gr";
 import { toast } from "react-toastify";
+import { ModalToWarningLogin } from "../../../../../../utils/validation";
 
 export interface Params {
     item: any;
-    idx: number
+    idx: number;
+    user: User | null | undefined;
 }
 
-export function RenderNewsOne({ item, idx }: Params) {
+export function RenderNewsOne({ item, idx, user }: Params) {
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [isLike, setIsLike] = useState(() => {
         const savedIsLike = localStorage.getItem(`isLike_${idx}`);
@@ -20,12 +25,19 @@ export function RenderNewsOne({ item, idx }: Params) {
 
     const handleClickLike = () => {
         const newIsLike = !isLike;
-        setIsLike(newIsLike);
-        localStorage.setItem(`isLike_${idx}`, JSON.stringify(newIsLike));
+        if (user) {
+            setIsLike(newIsLike);
+            localStorage.setItem(`isLike_${idx}`, JSON.stringify(newIsLike));
+        } else {
+            toast.error("Faça login antes de curtir ou favoritar.", {
+                theme: 'colored', 
+                autoClose: 1000
+            });
+        };
 
-        if (newIsLike) {
+        if (newIsLike && user) {
             toast.success('Publicação curtida!', {
-                autoClose: 2000,
+                autoClose: 1000,
             });
         }
     };
@@ -37,13 +49,23 @@ export function RenderNewsOne({ item, idx }: Params) {
 
     const handleClickFavorite = () => {
         const newIsFavorite = !isFavorite;
-        setIsFavorite(newIsFavorite);
-        localStorage.setItem(`isFavorite_${idx}`, JSON.stringify(newIsFavorite));
+        if (user) {
+            setIsFavorite(newIsFavorite);
+            localStorage.setItem(`isFavorite_${idx}`, JSON.stringify(newIsFavorite));
+        } else {
+            toast.error("Faça login antes de curtir ou favoritar.", {
+                autoClose: 1000,
+                theme: 'colored'
+            })
+        }
 
-        if (newIsFavorite) {
+        if (newIsFavorite && user) {
             toast.success('Publicação favoritada!', {
                 autoClose: 2000,
+                theme: 'colored'
             });
+        } else {
+            return {/* <ModalToWarningLogin isOpen={isOpen} onClose={onClose} onOpen={onOpen} /> */}
         }
     };
 
@@ -81,14 +103,14 @@ export function RenderNewsOne({ item, idx }: Params) {
                             <Img src={item?.newsBr?.urlToImage} h={"100%"} w={"100%"} objectFit={"cover"} />
 
                             <Box p={"0.3rem"}>
-                                {isLike ? (
+                                {isLike && user ? (
                                     <Text display={"flex"} color={"black.500"} alignItems={"center"} ml={"1rem"} gap={1}>
-                                       <BiSolidLike color="#8535fd" size={16} /> Você e mais {item?.user?.location?.street?.number} pessoas
+                                        <BiSolidLike color="#8535fd" size={16} /> Você e mais {item?.user?.location?.street?.number} pessoas
                                     </Text>
                                 ) : (
                                     <Text color={"violet.600"} display={"flex"} alignItems={"center"} ml={"1rem"} gap={1}>
-                                    <BiSolidLike color="violet.600" size={16} /> {item?.user?.location?.street?.number} pessoas curtiram
-                                </Text>
+                                        <BiSolidLike color="violet.600" size={16} /> {item?.user?.location?.street?.number} pessoas curtiram
+                                    </Text>
                                 )}
                             </Box>
                         </CardBody>
@@ -107,9 +129,9 @@ export function RenderNewsOne({ item, idx }: Params) {
                                 display={"flex"}
                                 flexDir={"column"}
                                 alignItems={"center"}
-                                color={isLike ? 'violet.600' : ''}
+                                color={isLike && user ? 'violet.600' : ''}
                             >
-                                {isLike ? <Icon boxSize={"1.5rem"} as={BiSolidLike} /> : <Icon boxSize={"1.5rem"} as={GrLike} />}
+                                {isLike && user ? <Icon boxSize={"1.5rem"} as={BiSolidLike} /> : <Icon boxSize={"1.5rem"} as={GrLike} />}
                                 <Text>Curtir</Text>
                             </Button>
 
@@ -124,9 +146,9 @@ export function RenderNewsOne({ item, idx }: Params) {
                                 flexDir={"column"}
                                 alignItems={"center"}
                                 onClick={handleClickFavorite}
-                                color={isFavorite ? 'violet.600' : ''}
+                                color={isFavorite && user ? 'violet.600' : ''}
                             >
-                                {isFavorite ? <Icon boxSize={"1.5rem"} as={FaHeart} /> : <Icon boxSize={"1.5rem"} as={BiHeart} />}
+                                {isFavorite && user ? <Icon boxSize={"1.5rem"} as={FaHeart} /> : <Icon boxSize={"1.5rem"} as={BiHeart} />}
                                 <Text>Favoritar</Text>
                             </Button>
                         </CardFooter>

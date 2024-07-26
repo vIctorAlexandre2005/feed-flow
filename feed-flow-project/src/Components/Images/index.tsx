@@ -8,6 +8,8 @@ import { GrLike } from "react-icons/gr";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { FeedImages } from "./Feed";
+import { LeftSidebar } from "../Layout/Home/LeftSidebar";
+import { RightSidebar } from "../Layout/Home/RightSidebar";
 
 export function RenderImages() {
 
@@ -55,7 +57,11 @@ export function RenderImages() {
 
     return (
         <>
-            <Box w={"100%"} display={"flex"} justifyContent={"center"} flexDir={"column"}>
+            <Box w={"100%"} display={"flex"} justifyContent={"center"}>
+                <Box mt={"6rem"} position={"absolute"} display={"flex"} left={"10rem"}>
+                    <LeftSidebar />
+                </Box>
+
                 <Flex mt={"6rem"} justify={"center"} direction={"column"}>
                     {photos.map((item: any, idx) => (
                         <Fragment key={idx}>
@@ -65,8 +71,11 @@ export function RenderImages() {
                             />
                         </Fragment>
                     ))}
-
                 </Flex>
+
+                <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"10rem"}>
+                    <RightSidebar />
+                </Box>
             </Box>
         </>
     )
