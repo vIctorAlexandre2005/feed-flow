@@ -7,6 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import { GrLanguage, GrLike, GrLikeFill } from "react-icons/gr";
 import { toast } from "react-toastify";
 import { ModalToWarningLogin } from "../../../../../../utils/validation";
+import { ClipLoader } from "react-spinners";
 
 export interface Params {
     item: any;
@@ -64,9 +65,7 @@ export function RenderNewsOne({ item, idx, user }: Params) {
                 autoClose: 2000,
                 theme: 'colored'
             });
-        } else {
-            return {/* <ModalToWarningLogin isOpen={isOpen} onClose={onClose} onOpen={onOpen} /> */}
-        }
+        };
     };
 
     return (
@@ -100,7 +99,12 @@ export function RenderNewsOne({ item, idx, user }: Params) {
                         </CardHeader>
 
                         <CardBody p={"0"}>
-                            <Img src={item?.newsBr?.urlToImage} h={"100%"} w={"100%"} objectFit={"cover"} />
+                            {/* <Img src={item?.newsBr?.urlToImage} h={"100%"} w={"100%"} objectFit={"cover"} /> */}
+                            {!item?.newsBr?.urlToImage ? (
+                                <ClipLoader size={24} color="green" />
+                            ) : (
+                                <Img src={item?.newsBr?.urlToImage} h={"100%"} w={"100%"} objectFit={"cover"} />
+                            )}
 
                             <Box p={"0.3rem"}>
                                 {isLike && user ? (

@@ -16,14 +16,12 @@ export interface VariablesContextType {
     combinedData: Array<Noticies>;
     setCombinedData: Dispatch<SetStateAction<Array<Noticies>>>;
     user: User | null | undefined;
-    handleSignIn: () => void;
 }
 
 const defaultValue: VariablesContextType = {
     combinedData: [],
     setCombinedData: () => { },
     user: null,
-    handleSignIn: () => {},
 };
 
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
@@ -32,9 +30,39 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
     const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
     const [user] = useAuthState(auth as any);
 
-    function handleSignIn() {
-        auth.signInWithPopup(provider).catch(alert);
+    const randomQueryOne = () => {
+        const queries = [
+            "Funny",
+            "Art",
+            "Animals",
+            "Coding",
+        ];
+        return queries[Math.floor(Math.random() * queries.length)];
     };
+
+    const randomQueryTwo = () => {
+        const queries = [
+            "Space",
+            "Nature",
+            "Night",
+            "Underwater",
+        ];
+        return queries[Math.floor(Math.random() * queries.length)];
+    };
+
+    const randomQueryThree = () => {
+        const queries = [
+            "Adult",
+            "Tesla",
+            "Apple",
+            "Love",
+        ];
+        return queries[Math.floor(Math.random() * queries.length)];
+    };
+
+    const queryOne = randomQueryOne();
+    const queryTwo = randomQueryTwo();
+    const queryThree = randomQueryThree();
     
     async function noticiesData() {
         try {
@@ -49,9 +77,9 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
                 axios.get("https://randomuser.me/api/?results=100"),
                 axios.get("https://randomuser.me/api/?results=200"),
                 axios.get("https://randomuser.me/api/?results=300"),
-                axios.get("https://newsapi.org/v2/everything?q=bitcoin&apiKey=343a4fdb5cf14397a3f251cba8370a51"),
-                axios.get("https://newsapi.org/v2/everything?q=apple&from=2024-07-23&to=2024-07-23&sortBy=popularity&apiKey=343a4fdb5cf14397a3f251cba8370a51"),
-                axios.get("https://newsapi.org/v2/everything?q=tesla&from=2024-06-25&sortBy=publishedAt&apiKey=343a4fdb5cf14397a3f251cba8370a51"),
+                axios.get(`https://newsapi.org/v2/everything?q=${queryOne}&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
+                axios.get(`https://newsapi.org/v2/everything?q=${queryTwo}&from=2024-07-23&to=2024-07-23&sortBy=popularity&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
+                axios.get(`https://newsapi.org/v2/everything?q=${queryThree}&from=2024-07-24&sortBy=publishedAt&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
             ]);
 
             const usersData = usersResponse.data?.results;
@@ -87,7 +115,6 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
                 combinedData,
                 setCombinedData,
                 user,
-                handleSignIn
             }}
         >
             {children}

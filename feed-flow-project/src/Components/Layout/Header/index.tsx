@@ -13,7 +13,7 @@ export function Header() {
 
     const { isOpen, onOpen,  } = useDisclosure();
     const router = useRouter();
-    const { user, handleSignIn } = useContextFeedContext();
+    const { user } = useContextFeedContext();
     // variaveis para condição de rota
 
     //HOME
@@ -123,7 +123,7 @@ export function Header() {
                         </Button>
                     </PopoverTrigger>
                     {isOpen && (
-                        <HeaderPopover handleSignIn={handleSignIn} user={user} />
+                        <HeaderPopover user={user} />
                     )}
                 </Popover>
             </Box>

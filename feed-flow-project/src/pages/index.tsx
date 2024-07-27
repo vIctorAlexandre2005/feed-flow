@@ -7,7 +7,7 @@ import { Box, Flex } from "@chakra-ui/react";
 
 export default function Home() {
 
-  const { combinedData, setCombinedData, user, handleSignIn } = useContextFeedContext();
+  const { combinedData, setCombinedData, user } = useContextFeedContext();
 
   return (
     <>
@@ -18,8 +18,7 @@ export default function Home() {
           </Box>
 
           <Box mt={"6rem"} w={"35%"} maxW={"35%"}>
-            <CenterFeed 
-            handleSignIn={handleSignIn}
+            <CenterFeed
               user={user} 
               combinedData={combinedData} 
               setCombinedData={setCombinedData} 

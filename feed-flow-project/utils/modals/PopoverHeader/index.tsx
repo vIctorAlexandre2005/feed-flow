@@ -1,13 +1,13 @@
+import { handleSignIn } from "@/Components/services/Login";
 import { Button, Img, Link, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Text } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import { FiExternalLink } from "react-icons/fi";
 
 interface HeaderPopover {
     user: User | null | undefined;
-    handleSignIn: () => void;
 }
 
-export function HeaderPopover({ user, handleSignIn }: HeaderPopover) {
+export function HeaderPopover({ user }: HeaderPopover) {
     return (
         <PopoverContent w={user ? '12rem' : '100%'}>
             <PopoverArrow />
