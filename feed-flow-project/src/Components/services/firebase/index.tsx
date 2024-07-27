@@ -19,6 +19,11 @@ const firebaseConfig = {
   appId: "1:144276156896:web:b912247ae6e0736b357b85"
 };
 
+/* NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=InBoEIEHiklnOaS4d-nVZMDxUUpbfKIbnjoafG8nkL0
+NY_TIMES_API_KEY=EuPjdZijA7SVOJMHl0reSkselAiV9L3S
+API_SECRET=Fr3u7TUeWSv5S3pd
+APP_API_ID=c5dc736b-7f25-4eb9-ad54-dfeeecb88e46 */
+
 /* const firebaseConfig = {
   apiKey: "AIzaSyB-wYRoHZUteraxh9ki-9SPjjAkZZOMFPA",
   authDomain: "e4devs-81719.firebaseapp.com",
