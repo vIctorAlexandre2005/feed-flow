@@ -29,6 +29,7 @@ const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 const NewsContext = ({ children }: { children: ReactNode }) => {
     const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
     const [user] = useAuthState(auth as any);
+    const router = useRouter();
 
     const randomQueryOne = () => {
         const queries = [
@@ -103,11 +104,27 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
         } catch (error) {
             console.log("Erro ao pegar combinação de dados:", error);
         }
-    }
+    };
 
     useEffect(() => {
         noticiesData();
     }, []);
+
+    useEffect(() => {
+        if(user) {
+            router.push("/");
+        } else if(user === null) {
+            router.push("/login");
+        }
+    }, [user]);
+
+    if(!user) {
+        return (
+            <Box display={"flex"} justifyContent={"center"} alignItems={"center"} mt={"16rem"}>
+                <ClipLoader size={40} color='green' />
+            </Box>
+        );
+    };
 
     return (
         <ParamsProvider.Provider

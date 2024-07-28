@@ -11,12 +11,12 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={customTheme}>
-      <MainLayout>
-        <NewsContext>
+      <NewsContext>
+        <MainLayout>
           <Component {...pageProps} />
           <ToastContainer hideProgressBar draggable limit={1} position="top-center" />
-        </NewsContext>
-      </MainLayout>
+        </MainLayout>
+      </NewsContext>
     </ChakraProvider>
   );
 }

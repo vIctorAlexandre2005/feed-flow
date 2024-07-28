@@ -1,26 +1,69 @@
 import { handleSignIn } from "@/Components/services/Login";
-import { Button, Img, Link, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Text } from "@chakra-ui/react";
+import { Logout } from "@/Components/services/Logout";
+import { Button, Img, Link, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Text, useDisclosure } from "@chakra-ui/react";
 import { User } from "firebase/auth";
+import { BiLogOutCircle } from "react-icons/bi";
+import { FcAbout } from "react-icons/fc";
 import { FiExternalLink } from "react-icons/fi";
+import { ModalAboutApp } from "../AboutTheAppModal";
 
 interface HeaderPopover {
     user: User | null | undefined;
 }
 
 export function HeaderPopover({ user }: HeaderPopover) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <PopoverContent w={user ? '12rem' : '100%'}>
             <PopoverArrow />
             <PopoverCloseButton />
-            {user ? (
-                <PopoverBody>
-                    <Link justifyContent={"center"} w={"100%"} display={"flex"} href="/profile">
+            {user && (
+                <PopoverBody display={"flex"} justifyContent={"center"} flexDir={"column"} w={"100%"}>
+                    <Link mb={"0.5rem"} justifyContent={"center"} w={"100%"} display={"flex"} href="/profile">
                         <Text gap={1} alignItems={"center"} display={"flex"} fontWeight={"bold"}>
                             Perfil <FiExternalLink size={20} />
                         </Text>
                     </Link>
+
+                    <Button
+                        onClick={Logout}
+                        bg={"transparent"}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                    >
+                        <Text
+                            textAlign={"center"}
+                            gap={1}
+                            alignItems={"center"}
+                            display={"flex"}
+                            fontWeight={"bold"}
+                        >
+                            Sair <BiLogOutCircle size={20} />
+                        </Text>
+                    </Button>
+
+                    <Button 
+                        bg={"transparent"}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                        onClick={onOpen}
+                    >
+                        <Text
+                            textAlign={"center"}
+                            gap={1}
+                            alignItems={"center"}
+                            display={"flex"}
+                            fontWeight={"bold"}
+                        >
+                            Sobre <FcAbout size={20} />
+                        </Text>
+                    </Button>
                 </PopoverBody>
-            ) : (
+            )}
+
+            {!user && (
                 <PopoverBody>
                     <Button
                         gap={2}
@@ -42,6 +85,9 @@ export function HeaderPopover({ user }: HeaderPopover) {
                         />
                     </Button>
                 </PopoverBody>
+            )}
+            {isOpen && (
+                <ModalAboutApp isOpen={isOpen} onClose={onClose} />
             )}
         </PopoverContent>
     )

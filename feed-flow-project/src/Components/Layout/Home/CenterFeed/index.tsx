@@ -9,9 +9,9 @@ import { VariablesContextType, useContextFeedContext } from "@/Components/Contex
 
 export function CenterFeed({ combinedData, setCombinedData, user } : VariablesContextType) {
 
-    if (combinedData?.length === 0) {
+    if (combinedData?.length < 1) {
         return (
-            <Flex justify={"center"}>
+            <Flex bg={"transparent"} justify={"center"}>
                 <PulseLoader size={24} color="#8535fd" />
             </Flex>
         );

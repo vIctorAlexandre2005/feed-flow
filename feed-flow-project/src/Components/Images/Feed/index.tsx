@@ -49,6 +49,14 @@ export function FeedImages({ item, photoID }: FeedImg) {
         }
     };
 
+    if(!item?.src?.original) {
+        return (
+            <Box display={"flex"} bg={"transparent"} justifyContent={"center"} alignItems={"center"} mt={"16rem"}>
+                <ClipLoader size={40} color='green' />
+            </Box>
+        );
+    }
+
     return (
         <>
             <Box p={"0"} display={"flex"} justifyContent={"center"} mb={"1rem"}>

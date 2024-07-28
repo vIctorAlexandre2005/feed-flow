@@ -111,15 +111,6 @@ export function Header() {
                                     <Text>Visitante</Text>
                                 </Flex>
                             )}
-                            {/* <Text
-                                textAlign={"center"}
-                                display={"flex"}
-                                alignItems={"center"}
-                                fontWeight={"500"}
-                                fontSize={"0.75rem"}
-                            >
-                                Saiba mais <RiArrowDownSFill size={16} />
-                            </Text> */}
                         </Button>
                     </PopoverTrigger>
                     {isOpen && (

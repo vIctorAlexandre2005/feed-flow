@@ -68,6 +68,8 @@ export function RenderNewsOne({ item, idx, user }: Params) {
         };
     };
 
+    console.log("item:", item?.newsBr);
+
     return (
         <>
             {item?.newsBr?.image_url === null ? (
