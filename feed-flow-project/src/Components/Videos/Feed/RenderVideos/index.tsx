@@ -3,6 +3,8 @@ import { Photo, Video, createClient } from "pexels";
 import { Fragment, useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { FeedVideos } from "..";
+import { toast } from "react-toastify";
+import { Loader } from "@/Components/Loader";
 
 export function RenderFeedVideos() {
     const [videos, setVideos] = useState<Video[]>([]);
@@ -43,14 +45,6 @@ export function RenderFeedVideos() {
         getVideos(100);
     }, []);
 
-    if (videos.length < 5) {
-        return (
-            <Box display={"flex"} bg={"transparent"} justifyContent={"center"} alignItems={"center"} mt={"16rem"}>
-                <ClipLoader size={40} color='green' />
-            </Box>
-        );
-    };
-
     console.log("videos,", videos);
 
     return (
@@ -71,6 +65,7 @@ export function RenderFeedVideos() {
                                 <FeedVideos
                                     key={id}
                                     index={id}
+                                    videoID={video.id}
                                     author={video.user.name}
                                     videoURL={video.video_files[0].link}
                                     authorLink={video.user.url}
@@ -81,9 +76,7 @@ export function RenderFeedVideos() {
                         ))}
                     </>
                 ) : (
-                    <>
-                        <h1>Nothing to show here</h1>
-                    </>
+                    <Loader />
                 )}
             </Box>
         </Flex>

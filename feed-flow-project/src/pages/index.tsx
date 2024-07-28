@@ -1,3 +1,4 @@
+import { NotFound404 } from "@/Components/404";
 import { useContextFeedContext } from "@/Components/Context";
 import { MainLayout } from "@/Components/Layout";
 import { CenterFeed } from "@/Components/Layout/Home/CenterFeed";
@@ -7,7 +8,15 @@ import { Box, Flex } from "@chakra-ui/react";
 
 export default function Home() {
 
-  const { combinedData, setCombinedData, user } = useContextFeedContext();
+  const { combinedData, setCombinedData, user, error, setError } = useContextFeedContext();
+
+  if(error) {
+    return (
+        <Box bg={"transparent"}>
+          <NotFound404 />
+        </Box>
+    );
+}
 
   return (
     <>
@@ -19,7 +28,9 @@ export default function Home() {
 
           <Box mt={"6rem"} w={"35%"} maxW={"35%"}>
             <CenterFeed
-              user={user} 
+              user={user}
+              error={error}
+              setError={setError}
               combinedData={combinedData} 
               setCombinedData={setCombinedData} 
             />

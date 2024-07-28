@@ -1,4 +1,5 @@
-import { Modal, ModalContent, ModalHeader, ModalOverlay } from "@chakra-ui/react";
+import { useContextFeedContext } from "@/Components/Context";
+import { Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
 
 interface ModalProps {
     isOpen: boolean;
@@ -6,13 +7,20 @@ interface ModalProps {
 }
 
 export function ModalAboutApp({ isOpen, onClose } : ModalProps) {
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered size={"lg"}>
             <ModalOverlay />
             <ModalContent bg={"white"}>
                 <ModalHeader>
-                    Leia sobre o App!
+                    Sobre este projeto
                 </ModalHeader>
+
+                <ModalBody>
+                    <Text>
+                        Meu nome é Victor e eu desenvolvi esse projeto sozinho. 
+                    </Text>
+                </ModalBody>
             </ModalContent>
         </Modal>
     )

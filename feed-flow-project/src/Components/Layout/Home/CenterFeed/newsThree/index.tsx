@@ -2,10 +2,10 @@ import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, F
 import { BiHeart, BiSolidLike } from "react-icons/bi";
 import { BsChat } from "react-icons/bs";
 import { GrLike } from "react-icons/gr";
-import { Params } from "../newsOne";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaHeart } from "react-icons/fa";
+import { Params } from "../../../../../../utils/interface/ParamsNews";
 
 export function RenderNewsThree({ item, idx }: Params) {
 

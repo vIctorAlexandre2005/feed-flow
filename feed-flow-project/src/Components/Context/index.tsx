@@ -6,23 +6,9 @@ import { auth, provider } from "../services/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from "next/router";
 import { User } from "firebase/auth";
-
-export interface Noticies {
-
-}
-
-
-export interface VariablesContextType {
-    combinedData: Array<Noticies>;
-    setCombinedData: Dispatch<SetStateAction<Array<Noticies>>>;
-    user: User | null | undefined;
-}
-
-const defaultValue: VariablesContextType = {
-    combinedData: [],
-    setCombinedData: () => { },
-    user: null,
-};
+import { NotFound404 } from "../404";
+import { Loader } from "../Loader";
+import { Noticies, VariablesContextType, defaultValue } from "../../../utils/interface/InterfaceContext";
 
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
@@ -30,6 +16,10 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
     const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
     const [user] = useAuthState(auth as any);
     const router = useRouter();
+
+    console.log(user?.providerData)
+
+    const [error, setError] = useState<null | string>(null);
 
     const randomQueryOne = () => {
         const queries = [
@@ -101,8 +91,10 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
             }));
 
             setCombinedData(combined);
+            setError(null);
         } catch (error) {
             console.log("Erro ao pegar combinação de dados:", error);
+            setError("Ocorreu um erro ao carregar os dados. Tente novamente mais tarde.");
         }
     };
 
@@ -110,28 +102,14 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
         noticiesData();
     }, []);
 
-    useEffect(() => {
-        if(user) {
-            router.push("/");
-        } else if(user === null) {
-            router.push("/login");
-        }
-    }, [user]);
-
-    if(!user) {
-        return (
-            <Box display={"flex"} justifyContent={"center"} alignItems={"center"} mt={"16rem"}>
-                <ClipLoader size={40} color='green' />
-            </Box>
-        );
-    };
-
     return (
         <ParamsProvider.Provider
             value={{
                 combinedData,
                 setCombinedData,
                 user,
+                error,
+                setError
             }}
         >
             {children}

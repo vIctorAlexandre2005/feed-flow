@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { FeedImages } from "./Feed";
 import { LeftSidebar } from "../Layout/Home/LeftSidebar";
 import { RightSidebar } from "../Layout/Home/RightSidebar";
+import { Loader } from "../Loader";
 
 export function RenderImages() {
 
@@ -47,9 +48,7 @@ export function RenderImages() {
 
     if (photos.length < 5) {
         return (
-            <Box display={"flex"} justifyContent={"center"} alignItems={"center"} mt={"16rem"}>
-                <ClipLoader size={40} color='green' />
-            </Box>
+            <Loader />
         );
     };
 

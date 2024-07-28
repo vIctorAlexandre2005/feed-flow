@@ -5,7 +5,7 @@ import { BsChat } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { GrLike } from "react-icons/gr";
 import { toast } from "react-toastify";
-import { Params } from "../newsOne";
+import { Params } from "../../../../../../utils/interface/ParamsNews";
 
 export function RenderNewsTwo({ item, idx }: Params) {
 

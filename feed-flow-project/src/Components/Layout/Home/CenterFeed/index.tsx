@@ -1,19 +1,18 @@
 import { Fragment, useEffect, useState } from "react";
 import { PropsContentPost, contentPost } from "../../../../../utils/lists/posts";
 import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, HStack, Icon, Img, Text, VStack } from "@chakra-ui/react";
-import { PulseLoader } from "react-spinners";
+import { ClipLoader, PulseLoader } from "react-spinners";
 import { RenderNewsOne } from "./newsOne";
 import { RenderNewsTwo } from "./newsTwo";
 import { RenderNewsThree } from "./newsThree";
-import { VariablesContextType, useContextFeedContext } from "@/Components/Context";
+import { Loader } from "@/Components/Loader";
+import { VariablesContextType } from "../../../../../utils/interface/InterfaceContext";
 
 export function CenterFeed({ combinedData, setCombinedData, user } : VariablesContextType) {
 
     if (combinedData?.length < 1) {
         return (
-            <Flex bg={"transparent"} justify={"center"}>
-                <PulseLoader size={24} color="#8535fd" />
-            </Flex>
+            <Loader />
         );
     };
 

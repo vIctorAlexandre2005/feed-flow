@@ -6,18 +6,13 @@ import { BsChat } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { GrLanguage, GrLike, GrLikeFill } from "react-icons/gr";
 import { toast } from "react-toastify";
-import { ModalToWarningLogin } from "../../../../../../utils/validation";
 import { ClipLoader } from "react-spinners";
-
-export interface Params {
-    item: any;
-    idx: number;
-    user: User | null | undefined;
-}
+import { Params } from "../../../../../../utils/interface/ParamsNews";
 
 export function RenderNewsOne({ item, idx, user }: Params) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+    console.log(user?.providerData)
 
     const [isLike, setIsLike] = useState(() => {
         const savedIsLike = localStorage.getItem(`isLike_${idx}`);
@@ -67,8 +62,6 @@ export function RenderNewsOne({ item, idx, user }: Params) {
             });
         };
     };
-
-    console.log("item:", item?.newsBr);
 
     return (
         <>

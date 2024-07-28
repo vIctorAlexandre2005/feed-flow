@@ -19,14 +19,12 @@ export function HeaderPopover({ user }: HeaderPopover) {
             <PopoverCloseButton />
             {user && (
                 <PopoverBody display={"flex"} justifyContent={"center"} flexDir={"column"} w={"100%"}>
-                    <Link mb={"0.5rem"} justifyContent={"center"} w={"100%"} display={"flex"} href="/profile">
-                        <Text gap={1} alignItems={"center"} display={"flex"} fontWeight={"bold"}>
-                            Perfil <FiExternalLink size={20} />
-                        </Text>
-                    </Link>
-
                     <Button
                         onClick={Logout}
+                        _hover={{
+                            color: 'white',
+                            bg: 'violet.600'
+                        }}
                         bg={"transparent"}
                         display={"flex"}
                         justifyContent={"center"}
@@ -49,6 +47,10 @@ export function HeaderPopover({ user }: HeaderPopover) {
                         justifyContent={"center"}
                         alignItems={"center"}
                         onClick={onOpen}
+                        _hover={{
+                            color: 'white',
+                            bg: 'violet.600'
+                        }}
                     >
                         <Text
                             textAlign={"center"}

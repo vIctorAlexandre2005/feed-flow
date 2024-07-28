@@ -15,13 +15,52 @@ interface FeedVideosProps {
     authorLink: string;
     lastVideoIndex: number;
     getVideos: (numVideos: number) => void;
+    videoID: number;
 }
 
-export function FeedVideos({ author, authorLink, getVideos, index, lastVideoIndex, videoURL }: FeedVideosProps) {
+export function FeedVideos({ 
+    author, authorLink, 
+    getVideos, index, 
+    lastVideoIndex, videoURL, videoID 
+}: FeedVideosProps) {
 
     const video = useRef<HTMLVideoElement>(null);
     const isInViewport = useIsInViewport(video);
     const [loadNewVidsAt, setloadNewVidsAt] = useState<number>(lastVideoIndex);
+
+    const [isLikeVideo, setIsLikeVideo] = useState(() => {
+        const savedLikes = localStorage.getItem(`likes-video${videoID}`);
+        return savedLikes ? JSON.parse(savedLikes) : false;
+    });
+
+    const [isFavoriteVideo, setIsFavoriteVideo] = useState(() => {
+        const savedFavorites = localStorage.getItem(`favorites-video${videoID}`);
+        return savedFavorites ? JSON.parse(savedFavorites) : false;
+    });
+
+    function handleLike() {
+        const savedLikes = !isLikeVideo;
+        setIsLikeVideo(savedLikes);
+        localStorage.setItem(`likes-video${videoID}`, JSON.stringify(savedLikes));
+
+        if (savedLikes) {
+            toast.success('Publicação curtida!', {
+                autoClose: 1000,
+            });
+        }
+    };
+
+    function handleFavorite() {
+        const savedFavorites = !isFavoriteVideo;
+        setIsFavoriteVideo(savedFavorites);
+        localStorage.setItem(`favorites-video${videoID}`, JSON.stringify(savedFavorites));
+
+        if (savedFavorites) {
+            toast.success('Publicação favoritada!', {
+                autoClose: 1000,
+            });
+        }
+    };
 
     if (isInViewport) {
         setTimeout(() => {
@@ -111,16 +150,14 @@ export function FeedVideos({ author, authorLink, getVideos, index, lastVideoInde
                         display={"flex"}
                         flexDir={"column"}
                         alignItems={"center"}
-                        color={"white"}
                         mb={"1rem"}
-                    /* color={isLike ? 'violet.600' : ''} */
-                    /* onClick={handleLike} */
+                        color={isLikeVideo ? 'violet.600' : 'white'}
+                        onClick={handleLike}
                     >
-                        {/* {isLike ?
-                                <Icon boxSize={"1.5rem"} as={BiSolidLike} /> :
-                                <Icon boxSize={"1.5rem"} as={GrLike} />
-                            } */}
-                        <Icon mb={"0.3rem"} boxSize={"1.5rem"} as={GrLike} />
+                        {isLikeVideo ?
+                            <Icon boxSize={"1.5rem"} as={BiSolidLike} /> :
+                            <Icon boxSize={"1.5rem"} as={GrLike} />
+                        }
                         <Text>Curtir</Text>
                     </Button>
 
@@ -134,12 +171,10 @@ export function FeedVideos({ author, authorLink, getVideos, index, lastVideoInde
                         display={"flex"}
                         flexDir={"column"}
                         alignItems={"center"}
-                        color={"white"}
-                    /* color={isFavorite ? 'violet.600' : ''}
-                    onClick={handleFavorite} */
+                        color={isFavoriteVideo ? 'violet.600' : 'white'}
+                        onClick={handleFavorite}
                     >
-                        {/* {isFavorite ? <Icon boxSize={"1.5rem"} as={FaHeart} /> : <Icon boxSize={"1.5rem"} as={BiHeart} />} */}
-                        <Icon mb={"0.3rem"} boxSize={"1.5rem"} as={BiHeart} />
+                        {isFavoriteVideo ? <Icon boxSize={"1.5rem"} as={FaHeart} /> : <Icon boxSize={"1.5rem"} as={BiHeart} />}
                         <Text>Favoritar</Text>
                     </Button>
                 </Flex>

@@ -7,11 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import { GrLike } from "react-icons/gr";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
-
-interface FeedImg {
-    item: any;
-    photoID: number;
-}
+import { FeedImg } from "../../../../utils/interface/FeedImg";
 
 export function FeedImages({ item, photoID }: FeedImg) {
 
