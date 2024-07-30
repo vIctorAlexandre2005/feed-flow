@@ -136,6 +136,7 @@ export function FeedVideos({
                 left={"85%"}
                 top={"50%"}
                 bg={"green"}
+                zIndex={1}
                 w={"0rem"}
                 position={"relative"}
             >

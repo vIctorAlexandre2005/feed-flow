@@ -1,8 +1,12 @@
 import { User } from "firebase/auth";
 import { Dispatch, SetStateAction } from "react";
+import { Url } from "url";
 
 export interface Noticies {
-
+    newsDataUsApi?: {
+        link: string; // ou (url: string) => string, dependendo do caso
+        title: string;
+    };
 }
 
 export interface VariablesContextType {
@@ -18,5 +22,5 @@ export const defaultValue: VariablesContextType = {
     setCombinedData: () => { },
     user: null,
     error: null,
-    setError: () => {},
+    setError: () => { },
 };

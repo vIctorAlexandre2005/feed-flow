@@ -26,6 +26,7 @@ export function RenderNewsTwo({ item, idx }: Params) {
 
         if (newIsLike) {
             toast.success('Publicação curtida!', {
+                theme: 'colored',
                 autoClose: 2000,
             });
         }
@@ -38,6 +39,7 @@ export function RenderNewsTwo({ item, idx }: Params) {
 
         if (newIsFavorite) {
             toast.success('Publicação favoritada!', {
+                theme: 'colored',
                 autoClose: 2000,
             });
         }

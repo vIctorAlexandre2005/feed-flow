@@ -72,7 +72,7 @@ export function RenderImages() {
                     ))}
                 </Flex>
 
-                <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"10rem"}>
+                <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"-10rem"}>
                     <RightSidebar />
                 </Box>
             </Box>

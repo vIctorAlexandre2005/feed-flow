@@ -5,7 +5,6 @@ import { User } from "firebase/auth";
 import { BiLogOutCircle } from "react-icons/bi";
 import { FcAbout } from "react-icons/fc";
 import { FiExternalLink } from "react-icons/fi";
-import { ModalAboutApp } from "../AboutTheAppModal";
 
 interface HeaderPopover {
     user: User | null | undefined;
@@ -40,28 +39,6 @@ export function HeaderPopover({ user }: HeaderPopover) {
                             Sair <BiLogOutCircle size={20} />
                         </Text>
                     </Button>
-
-                    <Button 
-                        bg={"transparent"}
-                        display={"flex"}
-                        justifyContent={"center"}
-                        alignItems={"center"}
-                        onClick={onOpen}
-                        _hover={{
-                            color: 'white',
-                            bg: 'violet.600'
-                        }}
-                    >
-                        <Text
-                            textAlign={"center"}
-                            gap={1}
-                            alignItems={"center"}
-                            display={"flex"}
-                            fontWeight={"bold"}
-                        >
-                            Sobre <FcAbout size={20} />
-                        </Text>
-                    </Button>
                 </PopoverBody>
             )}
 
@@ -87,9 +64,6 @@ export function HeaderPopover({ user }: HeaderPopover) {
                         />
                     </Button>
                 </PopoverBody>
-            )}
-            {isOpen && (
-                <ModalAboutApp isOpen={isOpen} onClose={onClose} />
             )}
         </PopoverContent>
     )

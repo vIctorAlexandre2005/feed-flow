@@ -41,7 +41,9 @@ export function Header() {
             pb={"0.2rem"} pl={"0.2rem"} pt={"0.2rem"}
         >
             <Box>
-                <Img src="/favicon.ico" h={50} w={50} objectFit={"cover"} />
+                <Text color={"violet.700"} fontSize={"2rem"} fontWeight={"bold"}>
+                    FeedFlow
+                </Text>
             </Box>
 
             <HStack gap={16}>

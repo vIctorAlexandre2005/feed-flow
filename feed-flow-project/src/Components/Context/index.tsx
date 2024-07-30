@@ -17,7 +17,7 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
     const [user] = useAuthState(auth as any);
     const router = useRouter();
 
-    console.log(user?.providerData)
+    console.log(user?.metadata.lastSignInTime)
 
     const [error, setError] = useState<null | string>(null);
 
@@ -63,7 +63,8 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
                 usersResponse300,
                 newsResponseBr, 
                 newsResponseApple, 
-                newsResponseUs
+                newsResponseUs,
+                newsDataApiUS,
             ] = await Promise.all([
                 axios.get("https://randomuser.me/api/?results=100"),
                 axios.get("https://randomuser.me/api/?results=200"),
@@ -71,6 +72,7 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
                 axios.get(`https://newsapi.org/v2/everything?q=${queryOne}&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
                 axios.get(`https://newsapi.org/v2/everything?q=${queryTwo}&from=2024-07-23&to=2024-07-23&sortBy=popularity&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
                 axios.get(`https://newsapi.org/v2/everything?q=${queryThree}&from=2024-07-24&sortBy=publishedAt&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
+                axios.get("https://newsdata.io/api/1/news?apikey=pub_48787ceb09c0c05e62f6efc09517e0bdcc29d&country=br"),
             ]);
 
             const usersData = usersResponse.data?.results;
@@ -79,6 +81,8 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
             const newsDataBr = newsResponseBr.data?.articles;
             const newsApple = newsResponseApple.data.articles;
             const newsDataUs = newsResponseUs.data?.articles;
+            const newsData = newsDataApiUS.data?.results;
+
 
             // Combine the data as needed
             const combined = usersData.map((user: any, index: number) => ({
@@ -87,9 +91,10 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
                 user300: userData300[index % userData300?.length],
                 newsBr: newsDataBr[index % newsDataBr?.length], // Just an example of combininga
                 newsAp: newsApple[index % newsApple?.length],
-                newsUs: newsDataUs[index % newsDataUs?.length]
+                newsUs: newsDataUs[index % newsDataUs?.length],
+                newsDataUsApi: newsData[index % newsData?.length]
             }));
-
+            console.log(combined)
             setCombinedData(combined);
             setError(null);
         } catch (error) {

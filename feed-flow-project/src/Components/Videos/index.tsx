@@ -10,11 +10,11 @@ export function VideosComponent() {
                 <LeftSidebar />
             </Box>
 
-            <Box mt={"6rem"} w={"35%"} maxW={"35%"}>
+            <Box mt={"4rem"} w={"35%"} maxW={"35%"}>
                 <RenderFeedVideos />
             </Box>
 
-            <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"10rem"}>
+            <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"-10rem"}>
                 <RightSidebar />
             </Box>
         </Flex>

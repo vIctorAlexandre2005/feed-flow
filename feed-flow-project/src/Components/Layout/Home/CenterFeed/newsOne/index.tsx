@@ -12,7 +12,6 @@ import { Params } from "../../../../../../utils/interface/ParamsNews";
 export function RenderNewsOne({ item, idx, user }: Params) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    console.log(user?.providerData)
 
     const [isLike, setIsLike] = useState(() => {
         const savedIsLike = localStorage.getItem(`isLike_${idx}`);
@@ -33,6 +32,7 @@ export function RenderNewsOne({ item, idx, user }: Params) {
 
         if (newIsLike && user) {
             toast.success('Publicação curtida!', {
+                theme: 'colored',
                 autoClose: 1000,
             });
         }

@@ -1,7 +1,11 @@
+import { useContextFeedContext } from "@/Components/Context";
 import { Avatar, Box, Card, CardBody, CardFooter, CardHeader, Flex, Icon, Img, Text, VStack } from "@chakra-ui/react";
 import { Fragment } from "react";
 
 export function LeftSidebar() {
+
+    const { user } = useContextFeedContext();
+
     return (
         <Fragment>
             <Box display={"flex"} justifyContent={"center"} mb={"1rem"}>
@@ -16,14 +20,14 @@ export function LeftSidebar() {
                 >
                     <CardHeader>
                         <Flex align={"center"} gap={2}>
-                            <Avatar src={'./image1.jpg'} />
+                            <Avatar src={user?.photoURL || undefined} />
                             <Box mb={"1rem"} mt={"1rem"}>
-                                <Text fontWeight={"bold"}>Tu compartilhou este post</Text>
+                                <Text fontWeight={"bold"}>{user?.displayName}</Text>
                             </Box>
                         </Flex>
 
                         <Box>
-                            <Text fontSize={"1rem"} textAlign={"left"}>Olá, victor!! kkkkkkkk</Text>
+                            <Text fontSize={"1rem"} textAlign={"left"}>Aproveite o FeedFlow!</Text>
                         </Box>
                     </CardHeader>
 

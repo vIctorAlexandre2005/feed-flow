@@ -4,6 +4,7 @@ import { MainLayout } from "@/Components/Layout";
 import { CenterFeed } from "@/Components/Layout/Home/CenterFeed";
 import { LeftSidebar } from "@/Components/Layout/Home/LeftSidebar";
 import { RightSidebar } from "@/Components/Layout/Home/RightSidebar";
+import { Loader } from "@/Components/Loader";
 import { Box, Flex } from "@chakra-ui/react";
 
 export default function Home() {
@@ -16,13 +17,17 @@ export default function Home() {
           <NotFound404 />
         </Box>
     );
-}
+};
+
+if(combinedData?.length === 0) {
+  return <Loader />
+};
 
   return (
     <>
       <MainLayout>
         <Flex w={"100%"} justify={"center"} direction={"row"} gap={4}>
-          <Box mt={"6rem"} position={"absolute"} display={"flex"} left={"10rem"}>
+          <Box mt={"6rem"} position={"absolute"} display={"flex"} left={"14rem"}>
             <LeftSidebar />
           </Box>
 
@@ -36,7 +41,7 @@ export default function Home() {
             />
           </Box>
 
-          <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"10rem"}>
+          <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"-10rem"}>
             <RightSidebar />
           </Box>
         </Flex>
