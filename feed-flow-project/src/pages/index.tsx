@@ -27,11 +27,11 @@ if(combinedData?.length === 0) {
     <>
       <MainLayout>
         <Flex w={"100%"} justify={"center"} direction={"row"} gap={4}>
-          <Box mt={"6rem"} position={"absolute"} display={"flex"} left={"14rem"}>
+          <Box mt={"6rem"} position={"absolute"} display={{ xs: 'none', tabletLandscape: 'flex' }} left={{tabletLandscape: '5rem', laptop: '14rem' }}>
             <LeftSidebar />
           </Box>
 
-          <Box mt={"6rem"} w={"35%"} maxW={"35%"}>
+          <Box mt={"6rem"} w={{ tabletLandscape: '35%', tablet: '100%' }} maxW={{ tabletLandscape: '35%', xs: '100%', sm: '75%' }} marginRight={{ tablet: '0', tabletLandscape: '4rem', laptop: '0' }}>
             <CenterFeed
               user={user}
               error={error}
@@ -41,7 +41,7 @@ if(combinedData?.length === 0) {
             />
           </Box>
 
-          <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"-10rem"}>
+          <Box mt={"6rem"} position={{ tabletLandscape: 'fixed', xs: 'absolute' }} visibility={{ xs: 'hidden', tabletLandscape: 'visible' }} display={{ xs: 'none', tabletLandscape: 'flex' }}  right={{ desktop: "5rem", tablet: '2rem' }}>
             <RightSidebar />
           </Box>
         </Flex>

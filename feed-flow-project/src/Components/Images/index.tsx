@@ -46,7 +46,7 @@ export function RenderImages() {
         getPhotosBrabo(100);
     }, []);
 
-    if (photos.length < 5) {
+    if (photos.length < 80) {
         return (
             <Loader />
         );
@@ -56,12 +56,12 @@ export function RenderImages() {
 
     return (
         <>
-            <Box w={"100%"} display={"flex"} justifyContent={"center"}>
-                <Box mt={"6rem"} position={"absolute"} display={"flex"} left={"10rem"}>
+            <Box p={{ xs: '1.5rem', sm: '0' }} w={"100%"} display={"flex"} justifyContent={"center"}>
+                <Box mt={"6rem"} position={"absolute"} display={{ xs: 'none', tabletLandscape: 'flex' }} left={{tabletLandscape: '5rem', laptop: '14rem' }}>
                     <LeftSidebar />
                 </Box>
 
-                <Flex mt={"6rem"} justify={"center"} direction={"column"}>
+                <Flex mt={"6rem"} justify={"center"} direction={"column"} w={{ tabletLandscape: '35%', tablet: '100%', sm: '100%' }} maxW={{ tabletLandscape: '35%', xs: '100%', sm: '100%' }} marginRight={{ tablet: '0', tabletLandscape: '4rem', laptop: '0' }}>
                     {photos.map((item: any, idx) => (
                         <Fragment key={idx}>
                             <FeedImages
@@ -72,7 +72,7 @@ export function RenderImages() {
                     ))}
                 </Flex>
 
-                <Box mt={"6rem"} position={"fixed"} display={"flex"} right={"-10rem"}>
+                <Box mt={"6rem"} position={{ tabletLandscape: 'fixed', xs: 'absolute' }} visibility={{ xs: 'hidden', tabletLandscape: 'visible' }} display={{ xs: 'none', tabletLandscape: 'flex' }}  right={{ desktop: "5rem", tablet: '2rem' }}>
                     <RightSidebar />
                 </Box>
             </Box>

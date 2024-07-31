@@ -1,10 +1,12 @@
 import { useContextFeedContext } from "@/Components/Context";
-import { Avatar, Box, Card, CardBody, CardFooter, CardHeader, Flex, Icon, Img, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Icon, Img, Text, VStack, useDisclosure } from "@chakra-ui/react";
 import { Fragment } from "react";
+import { ModalAbout } from "../../../../../utils/modals/about";
 
 export function LeftSidebar() {
 
     const { user } = useContextFeedContext();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <Fragment>
@@ -19,22 +21,40 @@ export function LeftSidebar() {
                     borderRadius={"lg"}
                 >
                     <CardHeader>
-                        <Flex align={"center"} gap={2}>
-                            <Avatar src={user?.photoURL || undefined} />
+                        {!user && (
+                            <Flex direction={"column"} align={"center"} gap={1}>
+                            <Avatar h={"90px"} w={"90px"} />
+                            <Box mb={"1rem"} mt={"1rem"}>
+                                <Text fontWeight={"bold"}>Visitante</Text>
+                            </Box>
+                        </Flex>
+                        )}
+                        {user && (
+                            <Flex direction={"column"} align={"center"} gap={1}>
+                            <Avatar h={"90px"} w={"90px"} src={user?.photoURL || undefined} />
                             <Box mb={"1rem"} mt={"1rem"}>
                                 <Text fontWeight={"bold"}>{user?.displayName}</Text>
                             </Box>
                         </Flex>
+                        )}
 
                         <Box>
-                            <Text fontSize={"1rem"} textAlign={"left"}>Aproveite o FeedFlow!</Text>
+                            <Button 
+                                onClick={onOpen}
+                                bg={"violet.500"} 
+                                _hover={{
+                                    bg: 'violet.800'
+                                }}
+                                color={"white"}
+                            >
+                                Sobre este projeto
+                            </Button>
                         </Box>
                     </CardHeader>
-
-                    <CardBody p={"0"}>
-                        {/* <Img src={item.image} h={"50%"} w={"100%"} objectFit={"cover"} /> */}
-                    </CardBody>
                 </Card>
+                {isOpen && (
+                    <ModalAbout isOpen={isOpen} onClose={onClose} />
+                )}
             </Box>
         </Fragment>
     )

@@ -8,12 +8,28 @@ import { useRouter } from "next/router";
 import { HeaderPopover } from "../../../../utils/modals/PopoverHeader";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { useContextFeedContext } from "@/Components/Context";
+import { DrawerNavHeader } from "../../../../utils/modals/DrawerNavHeader";
+import { BsMenuButton } from "react-icons/bs";
+import { IoMenu } from "react-icons/io5";
 
-export function Header() {
+interface MobileProps {
+    isMobile: boolean;
+};
 
-    const { isOpen, onOpen,  } = useDisclosure();
+export function Header({ isMobile } : MobileProps) {
+
+    const { isOpen, onOpen, onClose} = useDisclosure();
     const router = useRouter();
     const { user } = useContextFeedContext();
+    const [open, setOpen] = useState<boolean>(false);
+    
+    function handleOpenDrawer() {
+        setOpen(true);
+    }
+
+    function handleClose() {
+        setOpen(false);
+    }
     // variaveis para condição de rota
 
     //HOME
@@ -40,7 +56,21 @@ export function Header() {
             borderBottom={"1px solid"} borderBottomColor={"black.100"}
             pb={"0.2rem"} pl={"0.2rem"} pt={"0.2rem"}
         >
-            <Box>
+            {isMobile ? (
+                <>
+                <Button bg={"violet.600"} onClick={handleOpenDrawer}>
+                        <IoMenu size={24} color="white" />
+                    </Button>
+                <Box>
+                <Text color={"violet.700"} fontSize={"2rem"} fontWeight={"bold"}>
+                    FeedFlow
+                </Text>
+            </Box>
+                    
+                </>
+            ) : (
+                <>
+                <Box>
                 <Text color={"violet.700"} fontSize={"2rem"} fontWeight={"bold"}>
                     FeedFlow
                 </Text>
@@ -87,6 +117,8 @@ export function Header() {
                     </Fragment>
                 ))}
             </HStack>
+                </>
+            )}
 
             <Box>
                 <Popover>
@@ -120,6 +152,9 @@ export function Header() {
                     )}
                 </Popover>
             </Box>
+            {open && (
+                <DrawerNavHeader handleClose={handleClose} handleOpenDrawer={handleOpenDrawer} open={open} />
+            )}
         </Flex>
     );
 };

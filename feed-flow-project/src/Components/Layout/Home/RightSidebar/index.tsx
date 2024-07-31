@@ -11,7 +11,7 @@ export function RightSidebar() {
         <Fragment>
             <Box display={"flex"} justifyContent={"center"} mb={"1rem"}>
                 <Card
-                    w={"50%"}
+                    w={"20rem"}
                     maxW={"100%"}
                     border={"1px solid"}
                     borderColor={"black.100"}
