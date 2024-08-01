@@ -19,12 +19,12 @@ Etapas para instalar:
 
 ## 📦 Tecnologias usadas:
 NextJS <br/>
-Bootstrap <br/>
 Typescript <br />
 Postman <br />
-React Query para consumo de API <br />
-Framer Motion <br />
+Chakra UI <br />
+Axios para consumo de API <br />
 NewsAPI para consumo de API <br />
+Pexels
 PWA (Progressive Web App) <br />
 Firebase
 Firebase Hooks
