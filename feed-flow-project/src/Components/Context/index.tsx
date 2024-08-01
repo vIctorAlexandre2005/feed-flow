@@ -107,8 +107,8 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
     };
 
     useEffect(() => {
-        PWA();
         noticiesData();
+        PWA();
     }, []);
 
     function handleInstall() {

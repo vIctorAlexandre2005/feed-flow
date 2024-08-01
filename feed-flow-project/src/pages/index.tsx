@@ -16,7 +16,7 @@ export default function Home() {
         <Box bg={"transparent"}>
           <NotFound404 />
         </Box>
-    );
+    )
 };
 
 if(combinedData?.length === 0) {
