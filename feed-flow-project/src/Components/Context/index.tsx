@@ -10,12 +10,45 @@ import { NotFound404 } from "../404";
 import { Loader } from "../Loader";
 import { Noticies, VariablesContextType, defaultValue } from "../../../utils/interface/InterfaceContext";
 
+export interface InstallPromptEvent extends Event {
+    prompt: () => void;
+    userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
 const NewsContext = ({ children }: { children: ReactNode }) => {
     const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
+    const [installPrompt, setInstallPrompt] = useState<InstallPromptEvent | null>(null);
     const [user] = useAuthState(auth as any);
     const router = useRouter();
+
+    useEffect(() => {
+        if ('serviceWorker' in navigator) {
+            const beforeInstallPromptHandler = (event: Event) => {
+                event.preventDefault();
+                setInstallPrompt(event as InstallPromptEvent);
+            };
+
+            window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
+
+            window.addEventListener('appinstalled', () => {
+                console.log('');
+            });
+
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then((registration) => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, (err) => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+
+            return () => {
+                window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
+            };
+        }
+    }, []);
 
     console.log(user?.metadata.lastSignInTime)
 
@@ -107,11 +140,27 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
         noticiesData();
     }, []);
 
+    function handleInstall() {
+        if (installPrompt) {
+            installPrompt.prompt();
+            installPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the A2HS prompt');
+                } else {
+                    console.log('User dismissed the A2HS prompt');
+                }
+                setInstallPrompt(null);
+            });
+        }
+    };
+
     return (
         <ParamsProvider.Provider
             value={{
                 combinedData,
                 setCombinedData,
+                installPrompt,
+                handleInstall,
                 user,
                 error,
                 setError

@@ -9,7 +9,7 @@ import { Box, Flex } from "@chakra-ui/react";
 
 export default function Home() {
 
-  const { combinedData, setCombinedData, user, error, setError } = useContextFeedContext();
+  const { combinedData, setCombinedData, user, error, setError, handleInstall, installPrompt } = useContextFeedContext();
 
   if(error) {
     return (
@@ -33,7 +33,9 @@ if(combinedData?.length === 0) {
 
           <Box mt={"6rem"} w={{ tabletLandscape: '35%', tablet: '100%' }} maxW={{ tabletLandscape: '35%', xs: '100%', sm: '75%' }} marginRight={{ tablet: '0', tabletLandscape: '4rem', laptop: '0' }}>
             <CenterFeed
+              handleInstall={handleInstall}
               user={user}
+              installPrompt={installPrompt}
               error={error}
               setError={setError}
               combinedData={combinedData} 

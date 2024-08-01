@@ -11,7 +11,7 @@ export function NotFound404() {
             fontSize={"1.26rem"}
             textAlign={"center"}
         >
-            Oops, ocorreu um erro ao buscar notícias! Tente novamente mais tarde!
+            Oops, não consegui buscar os dados para você! Verifique sua internet ou tente novamente mais tarde!
         </Text>
        </Flex>
     )

@@ -2,8 +2,21 @@ import { Box, Flex } from "@chakra-ui/react";
 import { RenderFeedVideos } from "./Feed/RenderVideos";
 import { LeftSidebar } from "../Layout/Home/LeftSidebar";
 import { RightSidebar } from "../Layout/Home/RightSidebar";
+import { useContextFeedContext } from "../Context";
+import { NotFound404 } from "../404";
 
 export function VideosComponent() {
+
+    const { error } = useContextFeedContext();
+
+    if(error) {
+        return (
+            <Box bg={"transparent"}>
+              <NotFound404 />
+            </Box>
+        );
+    };
+
     return (
         <Flex w={"100%"} justify={"center"} direction={"row"} gap={4}>
             <Box mt={"6rem"} position={"absolute"} display={{ xs: 'none', tabletLandscape: 'flex' }} left={{tabletLandscape: '5rem', laptop: '14rem' }}>

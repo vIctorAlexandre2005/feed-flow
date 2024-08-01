@@ -124,11 +124,9 @@ export function DrawerNavHeader({ handleOpenDrawer, handleClose, open }: PropsDr
                         </Fragment>
                     ))}
                     <Box w={"100%"}
-                        onClick={() => {
-                            handleOpenAbout();
-                            handleClose();
-                            console.log("Foi");
-                        }}
+                        onClick={
+                            handleOpenAbout
+                        }
                         padding={"0.5rem"}
                         display={"flex"}
                         justifyContent={"left"}
@@ -144,11 +142,9 @@ export function DrawerNavHeader({ handleOpenDrawer, handleClose, open }: PropsDr
                             display={"flex"}
                             gap={8}
                             fontWeight={"bold"}
-                            onClick={() => {
-                                handleOpenAbout();
-                                handleClose();
-                                console.log("Foi");
-                            }}
+                            onClick={
+                                handleOpenAbout
+                            }
                             _hover={{
                                 bg: 'transparent',
                                 color: 'white'

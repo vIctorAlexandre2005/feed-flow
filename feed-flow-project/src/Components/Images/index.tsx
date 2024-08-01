@@ -11,11 +11,14 @@ import { FeedImages } from "./Feed";
 import { LeftSidebar } from "../Layout/Home/LeftSidebar";
 import { RightSidebar } from "../Layout/Home/RightSidebar";
 import { Loader } from "../Loader";
+import { useContextFeedContext } from "../Context";
+import { NotFound404 } from "../404";
 
 export function RenderImages() {
 
     const [videosLoaded, setvideosLoaded] = useState<Boolean>(false);
     const [photos, setPhotos] = useState<Photo[]>([]);
+    const { error } = useContextFeedContext();
 
     function getPhotosBrabo(length: number) {
         const randomQuery = () => {
@@ -46,6 +49,14 @@ export function RenderImages() {
         getPhotosBrabo(100);
     }, []);
 
+    if(error) {
+        return (
+            <Box bg={"transparent"}>
+              <NotFound404 />
+            </Box>
+        );
+    };
+    
     if (photos.length < 80) {
         return (
             <Loader />

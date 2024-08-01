@@ -1,3 +1,4 @@
+import { InstallPromptEvent } from "@/Components/Context";
 import { User } from "firebase/auth";
 import { Dispatch, SetStateAction } from "react";
 import { Url } from "url";
@@ -15,6 +16,9 @@ export interface VariablesContextType {
     user: User | null | undefined;
     error: null | string;
     setError: Dispatch<SetStateAction<null | string>>;
+    handleInstall: () => void;
+    installPrompt: InstallPromptEvent | null;
+
 }
 
 export const defaultValue: VariablesContextType = {
@@ -23,4 +27,6 @@ export const defaultValue: VariablesContextType = {
     user: null,
     error: null,
     setError: () => { },
+    handleInstall: () => { },
+    installPrompt: null,
 };
