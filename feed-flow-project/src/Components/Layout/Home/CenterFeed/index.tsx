@@ -16,6 +16,8 @@ export function CenterFeed({ combinedData, setCombinedData, user } : VariablesCo
         );
     };
 
+    console.log(combinedData)
+
     return (
         <>
             {combinedData?.map((item, idx) => (

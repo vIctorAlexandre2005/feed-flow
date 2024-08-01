@@ -70,13 +70,13 @@ export function RenderNewsTwo({ item, idx }: Params) {
 
                             <Box>
                                 <Text fontSize={"1rem"} textAlign={"left"}>
-                                    {item?.newsAp?.description}
+                                    {item?.newsDataUsApi?.title}
                                 </Text>
                             </Box>
                         </CardHeader>
 
                         <CardBody p={"0"}>
-                            <Img src={item?.newsAp?.urlToImage} h={"100%"} w={"100%"} objectFit={"cover"} />
+                            <Img src={item?.newsDataUsApi?.image_url} h={"100%"} w={"100%"} objectFit={"cover"} />
 
                             <Box p={"0.3rem"}>
                                 {isLike ? (

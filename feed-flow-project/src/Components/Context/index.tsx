@@ -66,35 +66,35 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
                 usersResponse, 
                 usersResponse200, 
                 usersResponse300,
-                newsResponseBr, 
+                /* newsResponseBr, 
                 newsResponseApple, 
-                newsResponseUs,
+                newsResponseUs, */
                 newsDataApiUS,
             ] = await Promise.all([
                 axios.get("https://randomuser.me/api/?results=100"),
                 axios.get("https://randomuser.me/api/?results=200"),
                 axios.get("https://randomuser.me/api/?results=300"),
-                axios.get(`https://newsapi.org/v2/everything?q=${queryOne}&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
+               /*  axios.get(`https://newsapi.org/v2/everything?q=${queryOne}&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
                 axios.get(`https://newsapi.org/v2/everything?q=${queryTwo}&from=2024-07-23&to=2024-07-23&sortBy=popularity&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
-                axios.get(`https://newsapi.org/v2/everything?q=${queryThree}&from=2024-07-24&sortBy=publishedAt&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
-                axios.get("https://newsdata.io/api/1/news?apikey=pub_48787ceb09c0c05e62f6efc09517e0bdcc29d&country=br"),
+                axios.get(`https://newsapi.org/v2/everything?q=${queryThree}&from=2024-07-24&sortBy=publishedAt&apiKey=343a4fdb5cf14397a3f251cba8370a51`), */
+                axios.get(`https://newsdata.io/api/1/latest?apikey=pub_49881c9e8d8fd418cdfdcfc0f85d3364881a6&q=${queryOne}&country=br`),
             ]);
 
             const usersData = usersResponse.data?.results;
             const userData200 = usersResponse200.data?.results;
             const userData300 = usersResponse300.data?.results;
-            const newsDataBr = newsResponseBr.data?.articles;
+            /* const newsDataBr = newsResponseBr.data?.articles;
             const newsApple = newsResponseApple.data.articles;
-            const newsDataUs = newsResponseUs.data?.articles;
+            const newsDataUs = newsResponseUs.data?.articles; */
             const newsData = newsDataApiUS.data?.results;
 
             const combined = usersData.map((user: any, index: number) => ({
                 user,
                 user200: userData200[index % userData200?.length], 
                 user300: userData300[index % userData300?.length],
-                newsBr: newsDataBr[index % newsDataBr?.length], // Just an example of combininga
+                /* newsBr: newsDataBr[index % newsDataBr?.length], // Just an example of combininga
                 newsAp: newsApple[index % newsApple?.length],
-                newsUs: newsDataUs[index % newsDataUs?.length],
+                newsUs: newsDataUs[index % newsDataUs?.length], */
                 newsDataUsApi: newsData[index % newsData?.length]
             }));
             console.log(combined)

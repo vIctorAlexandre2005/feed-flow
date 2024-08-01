@@ -65,9 +65,6 @@ export function RenderNewsOne({ item, idx, user }: Params) {
 
     return (
         <>
-            {item?.newsBr?.image_url === null ? (
-                ''
-            ) : (
                 <Box p={"0"} display={"flex"} justifyContent={"center"} mb={"1rem"}>
                     <Card
                         border={"1px solid"}
@@ -88,18 +85,18 @@ export function RenderNewsOne({ item, idx, user }: Params) {
 
                             <Box>
                                 <Text fontSize={"1rem"} textAlign={"left"}>
-                                    {item?.newsBr?.description}
+                                    {item?.newsDataUsApi?.title}
                                 </Text>
                             </Box>
                         </CardHeader>
 
                         <CardBody p={"0"}>
-                            {/* <Img src={item?.newsBr?.urlToImage} h={"100%"} w={"100%"} objectFit={"cover"} /> */}
-                            {!item?.newsBr?.urlToImage ? (
+                            <Img src={item?.newsDataUsApi?.image_url} h={"100%"} w={"100%"} objectFit={"cover"} />
+                            {/* {!item?.newsDataUsApi?.urlToImage ? (
                                 <ClipLoader size={24} color="green" />
                             ) : (
-                                <Img src={item?.newsBr?.urlToImage} h={"100%"} w={"100%"} objectFit={"cover"} />
-                            )}
+                                <Img src={item?.newsDataUsApi?.image_url} h={"100%"} w={"100%"} objectFit={"cover"} />
+                            )} */}
 
                             <Box p={"0.3rem"}>
                                 {isLike && user ? (
@@ -153,7 +150,6 @@ export function RenderNewsOne({ item, idx, user }: Params) {
                         </CardFooter>
                     </Card>
                 </Box>
-            )}
         </>
     )
 }
