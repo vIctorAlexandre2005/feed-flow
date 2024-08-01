@@ -13,6 +13,7 @@ import { RightSidebar } from "../Layout/Home/RightSidebar";
 import { Loader } from "../Loader";
 import { useContextFeedContext } from "../Context";
 import { NotFound404 } from "../404";
+import { randomQueryPhotos } from "../../../utils/RandomFunctions";
 
 export function RenderImages() {
 
@@ -20,24 +21,10 @@ export function RenderImages() {
     const [photos, setPhotos] = useState<Photo[]>([]);
     const { error } = useContextFeedContext();
 
-    function getPhotosBrabo(length: number) {
-        const randomQuery = () => {
-            const queries = [
-                "Funny",
-                "Art",
-                "Animals",
-                "Coding",
-                "Space",
-                "Nature",
-                "Night",
-                "Underwater",
-                "Adult"
-            ];
-            return queries[Math.floor(Math.random() * queries.length)];
-        };
-        const client = createClient('cRMrkHJu2v1W9pEgo8w4SpybDYQE6k2v1Zq5LPpqUiP72esLQVIXjiph');
-        const query = randomQuery();
-        client.photos.search({ query, per_page: length }).then((result) => {
+    function getPhotosAPI(length: number) {
+        const client = createClient("cRMrkHJu2v1W9pEgo8w4SpybDYQE6k2v1Zq5LPpqUiP72esLQVIXjiph");
+        const query = randomQueryPhotos();
+        client?.photos?.search({ query, per_page: length }).then((result) => {
             if ('photos' in result) {
                 setPhotos((oldPhotos) => [...oldPhotos, ...result.photos]);
             }
@@ -46,7 +33,7 @@ export function RenderImages() {
     }
 
     useEffect(() => {
-        getPhotosBrabo(100);
+        getPhotosAPI(100);
     }, []);
 
     if(error) {

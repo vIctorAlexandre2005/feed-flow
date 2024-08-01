@@ -5,31 +5,19 @@ import { ClipLoader } from "react-spinners";
 import { FeedVideos } from "..";
 import { toast } from "react-toastify";
 import { Loader } from "@/Components/Loader";
+import { randomQueryVideos } from "../../../../../utils/RandomFunctions";
 
 export function RenderFeedVideos() {
     const [videos, setVideos] = useState<Video[]>([]);
     const [videosLoaded, setvideosLoaded] = useState<Boolean>(false);
 
-    const randomQuery = () => {
-        const queries = [
-            "Funny",
-            "Art",
-            "Animals",
-            "Coding",
-            "Space",
-            "Nature",
-            "Night",
-            "Underwater",
-            "Adult"
-        ];
-        return queries[Math.floor(Math.random() * queries.length)];
-    };
+    
 
     const getVideos = (length: number) => {
         // Replace with your Pexels API Key
         const client = createClient("cRMrkHJu2v1W9pEgo8w4SpybDYQE6k2v1Zq5LPpqUiP72esLQVIXjiph");
 
-        const query = randomQuery();
+        const query = randomQueryVideos();
         client.videos
             .search({ query, per_page: length })
             .then((result) => {

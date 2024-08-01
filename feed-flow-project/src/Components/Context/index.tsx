@@ -9,21 +9,25 @@ import { User } from "firebase/auth";
 import { NotFound404 } from "../404";
 import { Loader } from "../Loader";
 import { Noticies, VariablesContextType, defaultValue } from "../../../utils/interface/InterfaceContext";
+import { randomQueryOne, randomQueryThree, randomQueryTwo } from "../../../utils/RandomFunctions";
 
 export interface InstallPromptEvent extends Event {
     prompt: () => void;
     userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
+const newsApiEnv = process.env.NEXT_NEWS_API_KEY
+
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
 const NewsContext = ({ children }: { children: ReactNode }) => {
     const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
     const [installPrompt, setInstallPrompt] = useState<InstallPromptEvent | null>(null);
+    const [error, setError] = useState<null | string>(null);
     const [user] = useAuthState(auth as any);
     const router = useRouter();
 
-    useEffect(() => {
+    function PWA() {
         if ('serviceWorker' in navigator) {
             const beforeInstallPromptHandler = (event: Event) => {
                 event.preventDefault();
@@ -48,46 +52,14 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
                 window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
             };
         }
-    }, []);
-
-    console.log(user?.metadata.lastSignInTime)
-
-    const [error, setError] = useState<null | string>(null);
-
-    const randomQueryOne = () => {
-        const queries = [
-            "Funny",
-            "Art",
-            "Animals",
-            "Coding",
-        ];
-        return queries[Math.floor(Math.random() * queries.length)];
-    };
-
-    const randomQueryTwo = () => {
-        const queries = [
-            "Space",
-            "Nature",
-            "Night",
-            "Underwater",
-        ];
-        return queries[Math.floor(Math.random() * queries.length)];
-    };
-
-    const randomQueryThree = () => {
-        const queries = [
-            "Adult",
-            "Tesla",
-            "Apple",
-            "Love",
-        ];
-        return queries[Math.floor(Math.random() * queries.length)];
-    };
+    }
 
     const queryOne = randomQueryOne();
     const queryTwo = randomQueryTwo();
     const queryThree = randomQueryThree();
     
+    // função para combinar os dados de API's diferentes
+
     async function noticiesData() {
         try {
             const [
@@ -116,8 +88,6 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
             const newsDataUs = newsResponseUs.data?.articles;
             const newsData = newsDataApiUS.data?.results;
 
-
-            // Combine the data as needed
             const combined = usersData.map((user: any, index: number) => ({
                 user,
                 user200: userData200[index % userData200?.length], 
@@ -137,6 +107,7 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
     };
 
     useEffect(() => {
+        PWA();
         noticiesData();
     }, []);
 
