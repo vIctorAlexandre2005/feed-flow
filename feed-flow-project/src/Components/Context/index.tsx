@@ -11,22 +11,14 @@ import { Loader } from "../Loader";
 import { Noticies, VariablesContextType, defaultValue } from "../../../utils/interface/InterfaceContext";
 import { randomQueryOne, randomQueryThree, randomQueryTwo } from "../../../utils/RandomFunctions";
 
-// Interface para evento de instalação de PWA
 export interface InstallPromptEvent extends Event {
     prompt: () => void;
     userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
-const ParamsProvider = createContext<VariablesContextType>(defaultValue);
+const newsApiEnv = process.env.NEXT_NEWS_API_KEY
 
-// Criação de uma instância do axios com configurações padrão
-const apiInstance = axios.create({
-    baseURL: 'https://newsapi.org/v2',
-    headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${"343a4fdb5cf14397a3f251cba8370a51"}`,
-    },
-});
+const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
 const NewsContext = ({ children }: { children: ReactNode }) => {
     const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
@@ -45,14 +37,14 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
             window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
 
             window.addEventListener('appinstalled', () => {
-                console.log('PWA instalado com sucesso.');
+                console.log('');
             });
 
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then((registration) => {
-                    console.log('ServiceWorker registrado com escopo: ', registration.scope);
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
                 }, (err) => {
-                    console.log('Falha ao registrar o ServiceWorker: ', err);
+                    console.log('ServiceWorker registration failed: ', err);
                 });
             });
 
@@ -65,25 +57,26 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
     const queryOne = randomQueryOne();
     const queryTwo = randomQueryTwo();
     const queryThree = randomQueryThree();
+    
+    // função para combinar os dados de API's diferentes
 
-    // Função para buscar dados de notícias e combinar com outras APIs
     async function noticiesData() {
         try {
             const [
-                usersResponse,
-                usersResponse200,
+                usersResponse, 
+                usersResponse200, 
                 usersResponse300,
-                newsResponseBr,
-                newsResponseApple,
+                newsResponseBr, 
+                newsResponseApple, 
                 newsResponseUs,
                 newsDataApiUS,
             ] = await Promise.all([
                 axios.get("https://randomuser.me/api/?results=100"),
                 axios.get("https://randomuser.me/api/?results=200"),
                 axios.get("https://randomuser.me/api/?results=300"),
-                apiInstance.get(`/everything?q=${queryOne}`),
-                apiInstance.get(`/everything?q=${queryTwo}&from=2024-07-23&to=2024-07-23&sortBy=popularity`),
-                apiInstance.get(`/everything?q=${queryThree}&from=2024-07-24&sortBy=publishedAt`),
+                axios.get(`https://newsapi.org/v2/everything?q=${queryOne}&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
+                axios.get(`https://newsapi.org/v2/everything?q=${queryTwo}&from=2024-07-23&to=2024-07-23&sortBy=popularity&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
+                axios.get(`https://newsapi.org/v2/everything?q=${queryThree}&from=2024-07-24&sortBy=publishedAt&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
                 axios.get("https://newsdata.io/api/1/news?apikey=pub_48787ceb09c0c05e62f6efc09517e0bdcc29d&country=br"),
             ]);
 
@@ -97,14 +90,14 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
 
             const combined = usersData.map((user: any, index: number) => ({
                 user,
-                user200: userData200[index % userData200?.length],
+                user200: userData200[index % userData200?.length], 
                 user300: userData300[index % userData300?.length],
-                newsBr: newsDataBr[index % newsDataBr?.length],
+                newsBr: newsDataBr[index % newsDataBr?.length], // Just an example of combininga
                 newsAp: newsApple[index % newsApple?.length],
                 newsUs: newsDataUs[index % newsDataUs?.length],
                 newsDataUsApi: newsData[index % newsData?.length]
             }));
-            console.log(combined);
+            console.log(combined)
             setCombinedData(combined);
             setError(null);
         } catch (error) {
@@ -123,9 +116,9 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
             installPrompt.prompt();
             installPrompt.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === 'accepted') {
-                    console.log('Usuário aceitou o prompt para adicionar à tela inicial.');
+                    console.log('User accepted the A2HS prompt');
                 } else {
-                    console.log('Usuário rejeitou o prompt para adicionar à tela inicial.');
+                    console.log('User dismissed the A2HS prompt');
                 }
                 setInstallPrompt(null);
             });
