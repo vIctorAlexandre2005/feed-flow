@@ -17,13 +17,15 @@ Etapas para instalar:
 - após isso, digite `yarn install ou npm install` <br />
 - E seja feliz! ;) <br />
 
-## 📦 Tecnologias usadas:
+## 📦 Tecnologias e boas práticas usadas:
 NextJS <br/>
 Typescript <br />
 Postman <br />
+React Query <br />
+Clean Code <br />
 Chakra UI <br />
 Axios para consumo de API <br />
-NewsAPI para consumo de API <br />
+NewsData.io para API <br />
 Pexels
 PWA (Progressive Web App) <br />
 Firebase
