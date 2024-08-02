@@ -4,13 +4,12 @@ import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, HSta
 import { ClipLoader, PulseLoader } from "react-spinners";
 import { RenderNewsOne } from "./newsOne";
 import { RenderNewsTwo } from "./newsTwo";
-import { RenderNewsThree } from "./newsThree";
 import { Loader } from "@/Components/Loader";
 import { VariablesContextType } from "../../../../../utils/interface/InterfaceContext";
 
-export function CenterFeed({ combinedData, setCombinedData, user }: VariablesContextType) {
+export function CenterFeed({ combinedData, user }: VariablesContextType) {
 
-    if (combinedData?.length < 1) {
+    if (combinedData?.length === 0) {
         return (
             <Loader />
         );
@@ -24,7 +23,6 @@ export function CenterFeed({ combinedData, setCombinedData, user }: VariablesCon
                 <Fragment key={idx}>
                     <RenderNewsOne user={user} item={item} idx={idx} />
                     <RenderNewsTwo item={item} user={user} idx={idx} />
-                    {/*  <RenderNewsThree item={item} user={user} idx={idx} /> */}
                 </Fragment>
             ))}
         </>

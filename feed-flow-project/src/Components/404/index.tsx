@@ -18,6 +18,7 @@ export function NotFound404() {
                 Oops, não consegui buscar os dados para você! Clique no botão abaixo e veja as instruções do que fazer para resolver.
             </Text>
 
+            <Flex justify={"center"}>
             <Button
                 color={"white"}
                 bg={"violet.700"}
@@ -25,9 +26,12 @@ export function NotFound404() {
                     bg: 'violet.900'
                 }}
                 onClick={onOpen}
+                w={"24rem"}
+                mt={"2rem"}
             >
                 Ver instruções
             </Button>
+            </Flex>
 
             {isOpen && (
                 <ModalError isOpen={isOpen} onClose={onClose} />

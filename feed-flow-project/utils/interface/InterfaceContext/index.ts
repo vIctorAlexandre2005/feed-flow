@@ -1,7 +1,7 @@
-import { InstallPromptEvent } from "@/Components/Context";
 import { User } from "firebase/auth";
 import { Dispatch, SetStateAction } from "react";
 import { Url } from "url";
+import { InstallPromptEvent } from "../PromptEvent";
 
 export interface Noticies {
     newsDataUsApi?: {
@@ -11,12 +11,11 @@ export interface Noticies {
     newsDataApiCrime?: {
         link: string;
         title: string;
-    }
+    };
 }
 
 export interface VariablesContextType {
-    combinedData: Array<Noticies>;
-    setCombinedData: Dispatch<SetStateAction<Array<Noticies>>>;
+    combinedData: Array<Noticies> | undefined;
     user: User | null | undefined;
     error: null | string;
     setError: Dispatch<SetStateAction<null | string>>;
@@ -27,7 +26,6 @@ export interface VariablesContextType {
 
 export const defaultValue: VariablesContextType = {
     combinedData: [],
-    setCombinedData: () => { },
     user: null,
     error: null,
     setError: () => { },

@@ -9,114 +9,30 @@ import { User } from "firebase/auth";
 import { NotFound404 } from "../404";
 import { Loader } from "../Loader";
 import { Noticies, VariablesContextType, defaultValue } from "../../../utils/interface/InterfaceContext";
-import { randomQueryOne, randomQueryThree, randomQueryTwo } from "../../../utils/RandomFunctions";
-
-export interface InstallPromptEvent extends Event {
-    prompt: () => void;
-    userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
-}
-
-const newsApiEnv = process.env.NEXT_NEWS_API_KEY
+import { InstallPromptEvent } from "../../../utils/interface/PromptEvent";
+import { useQuery } from "react-query";
+import { getNoticiesData } from "../services/newsService";
+import { usePWA } from "../services/pwa";
 
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
 const NewsContext = ({ children }: { children: ReactNode }) => {
-    const [combinedData, setCombinedData] = useState<Array<Noticies>>([]);
-    const [installPrompt, setInstallPrompt] = useState<InstallPromptEvent | null>(null);
     const [error, setError] = useState<null | string>(null);
     const [user] = useAuthState(auth as any);
     const router = useRouter();
-
-    function PWA() {
-        if ('serviceWorker' in navigator) {
-            const beforeInstallPromptHandler = (event: Event) => {
-                event.preventDefault();
-                setInstallPrompt(event as InstallPromptEvent);
-            };
-
-            window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
-
-            window.addEventListener('appinstalled', () => {
-                console.log('');
-            });
-
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then((registration) => {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, (err) => {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-
-            return () => {
-                window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
-            };
-        }
-    }
-
-    const queryOne = randomQueryOne();
-    const queryTwo = randomQueryTwo();
-    const queryThree = randomQueryThree();
-    
+    const { data: combinedData } = useQuery<Noticies[]>('noticiesData', getNoticiesData);
+    const installPrompt = usePWA();
     // função para combinar os dados de API's diferentes
 
-    async function noticiesData() {
-        try {
-            const [
-                usersResponse, 
-                usersResponse200,
-                newsResponseUs,
-                newsDataApiUS,
-                newsDataApiCrime,
-            ] = await Promise.all([
-                axios.get("https://randomuser.me/api/?results=100"),
-                axios.get("https://randomuser.me/api/?results=200"),
-                /* axios.get("https://randomuser.me/api/?results=300"), */
-               /*  axios.get(`https://newsapi.org/v2/everything?q=${queryOne}&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
-                axios.get(`https://newsapi.org/v2/everything?q=${queryTwo}&from=2024-07-23&to=2024-07-23&sortBy=popularity&apiKey=343a4fdb5cf14397a3f251cba8370a51`),
-                axios.get(`https://newsapi.org/v2/everything?q=${queryThree}&from=2024-07-24&sortBy=publishedAt&apiKey=343a4fdb5cf14397a3f251cba8370a51`), */
-                axios.get(`https://newsdata.io/api/1/latest?apikey=pub_49881c9e8d8fd418cdfdcfc0f85d3364881a6&q=all&country=br`),
-                axios.get(`https://newsdata.io/api/1/latest?apikey=pub_48787ceb09c0c05e62f6efc09517e0bdcc29d&q=apple&country=br`),
-                axios.get(`https://newsdata.io/api/1/latest?apikey=pub_49881c9e8d8fd418cdfdcfc0f85d3364881a6&q=crime&country=br`),
-            ]);
-
-            const usersData = usersResponse.data?.results;
-            const userData200 = usersResponse200.data?.results;
-            const newsDataUs = newsResponseUs.data?.results;
-            const newsData = newsDataApiUS.data?.results;
-            const newsDataApiCryme = newsDataApiCrime.data?.results;
-
-            const combined = usersData.map((user: any, index: number) => ({
-                user,
-                user200: userData200[index % userData200?.length], 
-                newsUs: newsDataUs[index % newsDataUs?.length],
-                newsDataUsApi: newsData[index % newsData?.length],
-                newsDataApiCrime: newsDataApiCryme[index % newsDataApiCryme?.length],
-            }));
-            console.log(combined)
-            setCombinedData(combined);
-            setError(null);
-        } catch (error) {
-            console.log("Erro ao pegar combinação de dados:", error);
-            setError("Ocorreu um erro ao carregar os dados. Tente novamente mais tarde.");
-        }
-    };
-
     useEffect(() => {
-        noticiesData();
-        PWA();
+        getNoticiesData();
     }, []);
 
-    function handleInstall() {
+    const handleInstall = () => {
         if (installPrompt) {
             installPrompt.prompt();
             installPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the A2HS prompt');
-                } else {
-                    console.log('User dismissed the A2HS prompt');
-                }
-                setInstallPrompt(null);
+                console.log(choiceResult.outcome === 'accepted' ? 'User accepted' : 'User dismissed');
             });
         }
     };
@@ -125,7 +41,6 @@ const NewsContext = ({ children }: { children: ReactNode }) => {
         <ParamsProvider.Provider
             value={{
                 combinedData,
-                setCombinedData,
                 installPrompt,
                 handleInstall,
                 user,

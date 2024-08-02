@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Flex, Icon, Img, Text, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Flex, Icon, Img, Link, Text, useDisclosure } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { BiHeart, BiSolidLike } from "react-icons/bi";
@@ -85,7 +85,7 @@ export function RenderNewsOne({ item, idx, user }: Params) {
 
                         <Box>
                             <Text fontSize={"1rem"} textAlign={"left"}>
-                                {item?.newsDataUsApi?.title}
+                                {item?.newsDataUsApi?.title}...<Link target="_blank" href={item?.newsDataUsApi?.link} fontWeight={500} color={"violet.600"}>Saiba mais</Link>
                             </Text>
                         </Box>
                     </CardHeader>

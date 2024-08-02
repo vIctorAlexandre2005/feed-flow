@@ -9,7 +9,7 @@ import { Box, Flex } from "@chakra-ui/react";
 
 export default function Home() {
 
-  const { combinedData, setCombinedData, user, error, setError, handleInstall, installPrompt } = useContextFeedContext();
+  const { combinedData, user, error, setError, handleInstall, installPrompt } = useContextFeedContext();
 
   if(error) {
     return (
@@ -38,8 +38,7 @@ if(combinedData?.length === 0) {
               installPrompt={installPrompt}
               error={error}
               setError={setError}
-              combinedData={combinedData} 
-              setCombinedData={setCombinedData} 
+              combinedData={combinedData}
             />
           </Box>
 

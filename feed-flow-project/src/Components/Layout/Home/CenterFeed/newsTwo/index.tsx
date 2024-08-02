@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Flex, Icon, Img, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, Flex, Icon, Img, Link, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiHeart, BiSolidLike } from "react-icons/bi";
 import { BsChat } from "react-icons/bs";
@@ -89,7 +89,7 @@ export function RenderNewsTwo({ item, idx }: Params) {
 
                             <Box>
                                 <Text fontSize={"1rem"} textAlign={"left"}>
-                                    {item?.newsUs?.title}
+                                    {item?.newsUs?.title}...<Link target="_blank" href={item?.newsDataUsApi?.link} fontWeight={500} color={"violet.600"}>Saiba mais</Link>
                                 </Text>
                             </Box>
                         </CardHeader>
