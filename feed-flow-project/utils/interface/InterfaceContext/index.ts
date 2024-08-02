@@ -8,6 +8,10 @@ export interface Noticies {
         link: string; // ou (url: string) => string, dependendo do caso
         title: string;
     };
+    newsDataApiCrime?: {
+        link: string;
+        title: string;
+    }
 }
 
 export interface VariablesContextType {

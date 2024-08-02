@@ -59,7 +59,7 @@ export function RenderImages() {
                     <LeftSidebar />
                 </Box>
 
-                <Flex mt={"6rem"} justify={"center"} direction={"column"} w={{ tabletLandscape: '35%', tablet: '100%', sm: '100%' }} maxW={{ tabletLandscape: '35%', xs: '100%', sm: '100%' }} marginRight={{ tablet: '0', tabletLandscape: '4rem', laptop: '0' }}>
+                <Flex mt={{ tablet: '6rem', xs: '3rem' }} justify={"center"} direction={"column"} w={{ tabletLandscape: '35%', tablet: '100%', xs: '100%' }} maxW={{ tabletLandscape: '35%', xs: '100%', sm: '100%' }} marginRight={{ tablet: '0', tabletLandscape: '4rem', laptop: '0' }}>
                     {photos.map((item: any, idx) => (
                         <Fragment key={idx}>
                             <FeedImages

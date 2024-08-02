@@ -95,7 +95,7 @@ export function FeedVideos({
             scrollSnapStop={"always"}
             bg={"#000"}
             position={"relative"}
-            borderRadius={"12px"}
+            borderRadius={{ tablet: '12px', xs: 0 }}
         >
             <AspectRatio
                 w={"100%"}
@@ -127,9 +127,6 @@ export function FeedVideos({
                 onClick={togglePlay}
             >
                 <Text>@{author}</Text>
-                <Text>
-                    Video by <Link href={authorLink}>{author} </Link> on Pexel
-                </Text>
             </Box>
 
             <Box

@@ -34,6 +34,11 @@ export const randomQueryOne = () => {
         "Art",
         "Animals",
         "Coding",
+        "Space",
+        "Nature",
+        "Night",
+        "Underwater",
+        "Adult"
     ];
     return queries[Math.floor(Math.random() * queries.length)];
 };

@@ -8,7 +8,7 @@ import { RenderNewsThree } from "./newsThree";
 import { Loader } from "@/Components/Loader";
 import { VariablesContextType } from "../../../../../utils/interface/InterfaceContext";
 
-export function CenterFeed({ combinedData, setCombinedData, user } : VariablesContextType) {
+export function CenterFeed({ combinedData, setCombinedData, user }: VariablesContextType) {
 
     if (combinedData?.length < 1) {
         return (
@@ -24,7 +24,7 @@ export function CenterFeed({ combinedData, setCombinedData, user } : VariablesCo
                 <Fragment key={idx}>
                     <RenderNewsOne user={user} item={item} idx={idx} />
                     <RenderNewsTwo item={item} user={user} idx={idx} />
-                    <RenderNewsThree item={item} user={user} idx={idx} />
+                    {/*  <RenderNewsThree item={item} user={user} idx={idx} /> */}
                 </Fragment>
             ))}
         </>

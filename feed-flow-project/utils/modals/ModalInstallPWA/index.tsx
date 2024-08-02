@@ -18,7 +18,26 @@ export function ModalPWA({ isOpen, onClose }: ModalPWAProps) {
 
             <ModalContent>
                 <ModalHeader justifyContent={"center"} display={"flex"} alignItems={"center"} gap={1}>
-                    <Text display={"flex"} gap={1.5}>Installe o <Text color={"violet.600"}>FeedFlow</Text> em seu dispositivo!</Text>
+                    <Text
+                        fontSize={{
+                            sm: '1.2rem',
+                            xs: '0.85rem'
+                        }}
+                        display={"flex"}
+                        gap={1.5}
+                    >
+                        Instale o
+                        <Text
+                            fontSize={{
+                                sm: '1.2rem',
+                                xs: '0.85rem'
+                            }}
+                            color={"violet.600"}
+                        >
+                            FeedFlow
+                        </Text>
+                        em seu dispositivo!
+                    </Text>
                 </ModalHeader>
 
                 <ModalBody display={"flex"} justifyContent={"center"}>

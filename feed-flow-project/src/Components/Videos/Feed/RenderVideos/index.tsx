@@ -39,7 +39,7 @@ export function RenderFeedVideos() {
         <Flex justify={"center"}>
             <Box
                 h={"100vh"}
-                w={"30rem"}
+                w={{ tablet: '30rem', xs: '100%' }}
                 overflowY={"scroll"}
                 scrollSnapType={"y mandatory"}
                 scrollBehavior={"auto"}
@@ -49,7 +49,7 @@ export function RenderFeedVideos() {
                 {videos.length > 0 ? (
                     <>
                         {videos.map((video, id) => (
-                            <Box mb={"1rem"}>
+                            <Box mb={{ tablet:'1rem', xs: '0' }}>
                                 <FeedVideos
                                     key={id}
                                     index={id}

@@ -22,7 +22,7 @@ export function RightSidebar() {
                     <CardHeader p={"0"}>
                         <Flex align={"center"} justify={"center"} gap={2}>
                             <Box mb={"1rem"} mt={"1rem"}>
-                                <Text fontWeight={"500"} fontSize={"1.5rem"}>Últimas notícias</Text>
+                                <Text fontWeight={"500"} fontSize={"1.5rem"}>FeedFlow notícias</Text>
                             </Box>
                         </Flex>
 
@@ -35,8 +35,14 @@ export function RightSidebar() {
                         <Flex maxH={"24rem"} direction={"column"}>
                             {combinedData?.map((item, idx) => (
                                 <Fragment key={idx}>
-                                    <Link target="_blank" mb={"0.5rem"} fontWeight={"bold"} color={"violet.500"} href={item?.newsDataUsApi?.link}>
-                                        <Text>{item?.newsDataUsApi?.title}</Text>
+                                    <Link 
+                                        target="_blank" 
+                                        mb={"0.5rem"} 
+                                        fontWeight={"bold"} 
+                                        color={"violet.500"} 
+                                        href={item?.newsDataUsApi?.link}
+                                    >
+                                     <Text>{item?.newsDataApiCrime?.title}</Text>
                                     </Link>
                                 </Fragment>
                             ))}

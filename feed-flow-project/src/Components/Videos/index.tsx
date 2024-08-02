@@ -23,7 +23,7 @@ export function VideosComponent() {
                 <LeftSidebar />
             </Box>
 
-            <Box mt={"6rem"} justifyContent={"center"} w={{ tabletLandscape: '35%', tablet: '100%', sm: '100%' }} maxW={{ tabletLandscape: '35%', xs: '100%', sm: '100%' }} marginRight={{ tablet: '0', tabletLandscape: '4rem', laptop: '0' }}>
+            <Box mt={{ tabletLandscape: '6rem', xs: '3.5rem' }} justifyContent={"center"} w={{ tabletLandscape: '35%', tablet: '100%', xs: '100%' }} maxW={{ tabletLandscape: '35%', xs: '100%', sm: '100%' }} marginRight={{ tablet: '0', tabletLandscape: '4rem', laptop: '0' }}>
                 <RenderFeedVideos />
             </Box>
 

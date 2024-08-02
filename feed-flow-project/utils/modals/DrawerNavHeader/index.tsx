@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Divider, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Icon, Popover, PopoverTrigger, Text, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Icon, Popover, PopoverTrigger, Text, useDisclosure } from "@chakra-ui/react";
 import { HeaderPopover } from "../PopoverHeader";
 import { useContextFeedContext } from "@/Components/Context";
 import { menuItemHeader } from "../../lists/menuListsHeader";
@@ -84,6 +84,7 @@ export function DrawerNavHeader({ handleOpenDrawer, handleClose, open }: PropsDr
                             <HeaderPopover user={user} />
                         )}
                     </Popover>
+                    <DrawerCloseButton />
                 </DrawerHeader>
                 <Divider />
                 <DrawerBody p={"2"} mt={"1rem"}>

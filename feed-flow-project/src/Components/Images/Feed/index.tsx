@@ -61,7 +61,7 @@ export function FeedImages({ item, photoID }: FeedImg) {
                     borderColor={"black.100"}
                     boxShadow={"none"}
                     p={"0rem"}
-                    w={"30rem"}
+                    w={{ tablet: '30rem', xs: '100%' }}
                     borderRadius={"lg"}
                 >
                     <CardHeader>

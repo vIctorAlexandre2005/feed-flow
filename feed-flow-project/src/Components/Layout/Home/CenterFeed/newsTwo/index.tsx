@@ -6,8 +6,11 @@ import { FaHeart } from "react-icons/fa";
 import { GrLike } from "react-icons/gr";
 import { toast } from "react-toastify";
 import { Params } from "../../../../../../utils/interface/ParamsNews";
+import { useContextFeedContext } from "@/Components/Context";
 
 export function RenderNewsTwo({ item, idx }: Params) {
+
+    const { user } = useContextFeedContext();
 
     const [isLike, setIsLike] = useState(() => {
         const savedIsLike = localStorage.getItem(`isLike_two${idx}`);
@@ -21,10 +24,17 @@ export function RenderNewsTwo({ item, idx }: Params) {
 
     const handleClickLike = () => {
         const newIsLike = !isLike;
-        setIsLike(newIsLike);
-        localStorage.setItem(`isLike_two${idx}`, JSON.stringify(newIsLike));
+        if (user) {
+            setIsLike(newIsLike);
+            localStorage.setItem(`isLike_two${idx}`, JSON.stringify(newIsLike));
+        } else {
+            toast.error("Faça login antes de curtir ou favoritar.", {
+                theme: 'colored',
+                autoClose: 1000
+            });
+        };
 
-        if (newIsLike) {
+        if (newIsLike && user) {
             toast.success('Publicação curtida!', {
                 theme: 'colored',
                 autoClose: 2000,
@@ -34,10 +44,17 @@ export function RenderNewsTwo({ item, idx }: Params) {
 
     const handleClickFavorite = () => {
         const newIsFavorite = !isFavorite;
-        setIsFavorite(newIsFavorite);
-        localStorage.setItem(`isFavorite_two${idx}`, JSON.stringify(newIsFavorite));
+        if (user) {
+            setIsFavorite(newIsFavorite);
+            localStorage.setItem(`isFavorite_two${idx}`, JSON.stringify(newIsFavorite));
+        } else {
+            toast.error("Faça login antes de curtir ou favoritar.", {
+                theme: 'colored',
+                autoClose: 1000
+            });
+        };
 
-        if (newIsFavorite) {
+        if (newIsFavorite && user) {
             toast.success('Publicação favoritada!', {
                 theme: 'colored',
                 autoClose: 2000,
@@ -45,9 +62,11 @@ export function RenderNewsTwo({ item, idx }: Params) {
         }
     };
 
+    console.log(item?.newsUs)
+
     return (
         <>
-            {item?.newsAp?.image_url === null ? (
+            {item?.newsUs?.image_url === null ? (
                 ''
             ) : (
                 <Box p={"0"} display={"flex"} justifyContent={"center"} mb={"1rem"}>
@@ -70,23 +89,23 @@ export function RenderNewsTwo({ item, idx }: Params) {
 
                             <Box>
                                 <Text fontSize={"1rem"} textAlign={"left"}>
-                                    {item?.newsDataUsApi?.title}
+                                    {item?.newsUs?.title}
                                 </Text>
                             </Box>
                         </CardHeader>
 
                         <CardBody p={"0"}>
-                            <Img src={item?.newsDataUsApi?.image_url} h={"100%"} w={"100%"} objectFit={"cover"} />
+                            <Img src={item?.newsUs?.image_url} h={"100%"} w={"100%"} objectFit={"cover"} />
 
                             <Box p={"0.3rem"}>
                                 {isLike ? (
                                     <Text display={"flex"} color={"black.500"} alignItems={"center"} ml={"1rem"} gap={1}>
-                                       <BiSolidLike color="#8535fd" size={16} /> Você e mais {item?.user200?.location?.street?.number} pessoas
+                                        <BiSolidLike color="#8535fd" size={16} /> Você e mais {item?.user200?.location?.street?.number} pessoas
                                     </Text>
                                 ) : (
                                     <Text color={"violet.600"} display={"flex"} alignItems={"center"} ml={"1rem"} gap={1}>
-                                    <BiSolidLike color="violet.600" size={16} /> {item?.user200?.location?.street?.number} pessoas curtiram
-                                </Text>
+                                        <BiSolidLike color="violet.600" size={16} /> {item?.user200?.location?.street?.number} pessoas curtiram
+                                    </Text>
                                 )}
                             </Box>
                         </CardBody>
